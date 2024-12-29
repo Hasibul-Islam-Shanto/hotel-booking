@@ -5,15 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bfccfc28-64e0-4e02-9d20-3895decb2c5f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/dbConnect.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/hotelModel.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/reviewModel.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/model/userModel.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/actions/index.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/auth/[...nextauth]/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/auth/register/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/auth.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/auth/ContinueWithGoogleButton.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/auth/LoginForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/auth/RegisterForm.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/ui/Spinner.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/utils/PopupElementWithLogin.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/components/utils/PopupElementWithoutLogin.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/mongodbClient.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/utils/checkAuthError.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(.)signin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(.)signin/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/(.)signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/(.)signup/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/signin/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/signin/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/signup/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/signup/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Navbar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Navbar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/ui/Modal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/ui/Modal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/utils/UserInteraction.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/utils/UserInteraction.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model/userModel.ts" beforeDir="false" afterPath="$PROJECT_DIR$/model/userModel.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/navbar-popup-elements.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/navbar-popup-elements.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -71,6 +87,8 @@
       <workItem from="1735231035487" duration="142000" />
       <workItem from="1735231183265" duration="4019000" />
       <workItem from="1735235214585" duration="2380000" />
+      <workItem from="1735367430312" duration="24636000" />
+      <workItem from="1735448025940" duration="6519000" />
     </task>
     <servers />
   </component>

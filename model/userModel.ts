@@ -2,6 +2,7 @@ import {Model, model, models, Schema, Document} from "mongoose";
 
 
 export interface User extends Document {
+    _id: string;
     name: string;
     email: string;
     password: string;
