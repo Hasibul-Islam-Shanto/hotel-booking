@@ -1,37 +1,94 @@
+"use client";
 import Image from "next/image";
+import CustomInput from "@/components/hotel-create/CustomInput";
+import { FaBed, FaCircleInfo, FaDoorOpen, FaPerson } from "react-icons/fa6";
+import CustomTextarea from "@/components/hotel-create/CustomTextarea";
+import { useForm } from "react-hook-form";
+import { Hotel, hotelSchema } from "@/schemas/hotel";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FaSave } from "react-icons/fa";
+import { facilitiesData } from "@/utils/facilitiesData";
 
 const HotelCreate = () => {
+  const {
+    register,
+    watch,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Hotel>({
+    resolver: zodResolver(hotelSchema),
+  });
+
+  const {
+    propertyName,
+    propertyLocation,
+    images1,
+    images2,
+    images3,
+    images4,
+    images5,
+    pricePerNight,
+    rooms,
+    guests,
+    bedrooms,
+    beds,
+    description,
+  } = watch();
+
+  const onSubmit = (data: Hotel) => {
+    console.log(data);
+  };
   return (
     <>
-      <div className="max-w-7xl mx-auto px-6 py-8 relative">
-        <button className="px-4 py-2 bg-primary text-white rounded-lg hover:brightness-90 absolute top-4 right-4">
-          <i className="fas fa-save mr-2"></i>
+      {Object.keys(errors).length > 0 && (
+        <div className="w-full flex justify-center items-center">
+          <div className="bg-red-400 flex items-center gap-2 p-2 rounded-md">
+            <FaCircleInfo className="text-white" />
+            <p className="text-white text-lg">
+              Please fill all the field to publish.
+            </p>
+          </div>
+        </div>
+      )}
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="max-w-7xl mx-auto px-6 py-8 relative"
+      >
+        <button
+          type="submit"
+          className="px-4 py-2 flex items-center gap-x-2 bg-primary text-white rounded-lg hover:brightness-90 absolute top-4 right-4"
+        >
+          <FaSave />
           Publish
         </button>
         {/* <!-- Property Title and Rating --> */}
         <div className="mb-6">
-          <h1
-            className="text-3xl font-bold mb-2 text-zinc-400 edit"
-            id="propertyName"
-          >
-            Property Name
-          </h1>
-          <div className="flex items-center text-gray-600">
-            <span className="edit text-gray-600">Property location</span>
-          </div>
+          <CustomInput
+            {...register("propertyName")}
+            value={propertyName || "Property Name"}
+            type={"text"}
+            inputValueClassName={"text-3xl font-bold mb-2 text-zinc-400"}
+          />
+          <CustomInput
+            {...register("propertyLocation")}
+            value={propertyLocation || "Property Location"}
+            type={"text"}
+            inputValueClassName={"text-gray-600"}
+          />
         </div>
 
         {/* <!-- Image Gallery --> */}
         <div className="grid grid-cols-4 grid-rows-2 gap-4 mb-8 h-[500px]">
           <div className="col-span-2 row-span-2 relative">
             <Image
-              src="https://placehold.co/600x400"
+              src={images1 || "https://placehold.co/600x400"}
               height={400}
               width={600}
               alt="Main Room"
               className="w-full h-full object-cover rounded-lg"
             />
             <input
+              {...register("images1")}
               type="text"
               placeholder="https://placehold.co/600x400"
               className="w-11/12 p-2 border border-primary rounded-lg mt-2 absolute left-1/2 -translate-x-1/2 bottom-2 bg-white"
@@ -39,13 +96,14 @@ const HotelCreate = () => {
           </div>
           <div className="relative">
             <Image
-              src="https://placehold.co/600x400"
+              src={images2 || "https://placehold.co/600x400"}
               height={400}
               width={600}
               alt="Room 1"
               className="w-full h-full object-cover rounded-lg"
             />
             <input
+              {...register("images2")}
               type="text"
               placeholder="https://placehold.co/600x400"
               className="text-sm w-11/12 p-2 border border-primary rounded-lg mt-2 absolute left-1/2 -translate-x-1/2 bottom-2 bg-white"
@@ -53,13 +111,14 @@ const HotelCreate = () => {
           </div>
           <div className="relative">
             <Image
-              src="https://placehold.co/600x400"
+              src={images3 || "https://placehold.co/600x400"}
               height={400}
               width={600}
               alt="Room 2"
               className="w-full h-full object-cover rounded-lg"
             />
             <input
+              {...register("images3")}
               type="text"
               placeholder="https://placehold.co/600x400"
               className="text-sm w-11/12 p-2 border border-primary rounded-lg mt-2 absolute left-1/2 -translate-x-1/2 bottom-2 bg-white"
@@ -67,13 +126,14 @@ const HotelCreate = () => {
           </div>
           <div className="relative">
             <Image
-              src="https://placehold.co/600x400"
+              src={images4 || "https://placehold.co/600x400"}
               height={400}
               width={600}
               alt="Room 3"
               className="w-full h-full object-cover rounded-lg"
             />
             <input
+              {...register("images4")}
               type="text"
               placeholder="https://placehold.co/600x400"
               className="text-sm w-11/12 p-2 border border-primary rounded-lg mt-2 absolute left-1/2 -translate-x-1/2 bottom-2 bg-white"
@@ -81,13 +141,14 @@ const HotelCreate = () => {
           </div>
           <div className="relative">
             <Image
-              src="https://placehold.co/600x400"
+              src={images5 || "https://placehold.co/600x400"}
               height={400}
               width={600}
               alt="Room 4"
               className="w-full h-full object-cover rounded-lg"
             />
             <input
+              {...register("images5")}
               type="text"
               placeholder="https://placehold.co/600x400"
               className="text-sm w-11/12 p-2 border border-primary rounded-lg mt-2 absolute left-1/2 -translate-x-1/2 bottom-2 bg-white"
@@ -95,84 +156,93 @@ const HotelCreate = () => {
           </div>
         </div>
 
-        <div className="mb-4">
-          <span className="text-xl font-bold edit">Price in USD</span>
+        <div className="mb-4 flex items-center gap-2">
+          <CustomInput
+            {...register("pricePerNight")}
+            value={`Price in ${pricePerNight || 0}USD`}
+            type={"text"}
+            inputValueClassName={"text-gray-800 text-xl"}
+          />
           <span className="text-gray-600 ml-1">per night</span>
         </div>
 
         <div className="mb-4">
-          {/* <!-- Stock --> */}
-          <span className="edit">Available X rooms</span>
+          <CustomInput
+            {...register("rooms")}
+            value={`Available ${rooms || "X"} rooms`}
+            type={"text"}
+            inputValueClassName={"text-gray-800"}
+          />
         </div>
 
-        {/* <!-- Property Details --> */}
         <div className="grid grid-cols-3 gap-8">
-          {/* <!-- Left Column: Property Description --> */}
           <div className="col-span-2">
             <div className="border-b pb-6 mb-6">
               <div className="grid grid-cols-1 gap-4 text-gray-600">
                 <div className="flex items-center gap-2">
-                  <i className="fas fa-person"></i>
-                  <span className="edit">How many Guest can Stay?</span>
+                  <FaPerson />
+                  <CustomInput
+                    {...register("guests")}
+                    value={guests || `How many Guest can Stay?`}
+                    type={"text"}
+                    inputValueClassName={"text-gray-800"}
+                  />
                 </div>
                 <div className="flex items-center gap-2">
-                  <i className="fas fa-door-open"></i>
-                  <span className="edit">How many Bedrooms ? </span>
+                  <FaDoorOpen />
+                  <CustomInput
+                    {...register("bedrooms")}
+                    value={bedrooms || `How many Bedrooms ?`}
+                    type={"text"}
+                    inputValueClassName={"text-gray-800"}
+                  />
                 </div>
                 <div className="flex items-center gap-2">
-                  <i className="fas fa-bed"></i>
-                  <span className="edit">How many beds available ?</span>
+                  <FaBed />
+                  <CustomInput
+                    {...register("beds")}
+                    value={beds || `How many beds available ?`}
+                    type={"text"}
+                    inputValueClassName={"text-gray-800"}
+                  />
                 </div>
               </div>
             </div>
 
-            {/* <!-- Description --> */}
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-4">About this place</h3>
-              <p className="text-gray-700 leading-relaxed edit">
-                Write a short description about this place
-              </p>
+              <CustomTextarea
+                {...register("description")}
+                value={
+                  description || `Write a short description about this place`
+                }
+                inputValueClassName={"text-gray-700 leading-relaxed"}
+              />
             </div>
 
-            {/* <!-- Amenities --> */}
             <div>
               <h3 className="text-xl font-semibold mb-4">
                 What this place offers
               </h3>
               <div className="grid grid-cols-2 gap-4" id="amenities">
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <i className="fa-solid fa-umbrella-beach"></i>
-                  <span>Beach access</span>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <i className="fa-solid fa-person-swimming"></i>
-                  <span>Private pool</span>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <i className="fa-solid fa-wifi"></i>
-                  <span>Free Wi-Fi</span>
-                </div>
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <i className="fa-solid fa-sink"></i>
-                  <span>Kitchen</span>
-                </div>
-
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <i className="fa-solid fa-square-parking"></i>
-                  <span>Free Parking</span>
-                </div>
-
-                <div className="flex items-center gap-2 cursor-pointer">
-                  <i className="fa-solid fa-dumbbell"></i>
-                  <span>Fitness Center</span>
-                </div>
+                {facilitiesData.map((facility) => (
+                  <div
+                    key={facility.id}
+                    className="flex items-center gap-2 cursor-pointer"
+                  >
+                    <facility.icon />
+                    <span>{facility.name}</span>
+                    <input
+                      type="checkbox"
+                      {...register(`facilities.${facility.registerName}`)}
+                    />
+                  </div>
+                ))}
               </div>
             </div>
           </div>
-
-          {/* <!-- Right Column: Booking Card --> */}
         </div>
-      </div>
+      </form>
     </>
   );
 };
