@@ -1,13 +1,15 @@
+import Hotel from "@/types/hotel";
 import Image from "next/image";
+import Link from "next/link";
 import { FaEdit, FaStar, FaTrash } from "react-icons/fa";
 
-const HotManageCard = () => {
+const HotManageCard = ({ hotel }: { hotel: Hotel }) => {
   return (
     <>
       <div className="overflow-hidden cursor-pointer">
         <div className="relative">
           <Image
-            src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={hotel?.images[0]}
             height={500}
             width={500}
             alt="Hotel Property"
@@ -20,18 +22,25 @@ const HotManageCard = () => {
         </div>
         <div className="p-4">
           <h2 className="text-lg font-semibold text-zinc-800 mb-2">
-            Cozy Mountain Retreat
+            {hotel?.propertyName}
           </h2>
           <div className="flex justify-between items-center">
-            <span className="text-zinc-600">3 Rooms Available</span>
-            <span className="text-rose-600 font-semibold">$250/night</span>
+            <span className="text-zinc-600">
+              {hotel?.rooms} Rooms Available
+            </span>
+            <span className="text-rose-600 font-semibold">
+              ${hotel?.pricePerNight}/night
+            </span>
           </div>
           <div className="flex justify-between items-center">
-            <span className="text-zinc-500">Location: Mountain View, CA</span>
-            <div className="space-x-2">
-              <button className="text-blue-500 hover:text-blue-600">
+            <span className="text-zinc-500">{hotel?.propertyLocation}</span>
+            <div className="flex items-center gap-4">
+              <Link
+                href={`/hotels/${hotel?._id}/edit`}
+                className="text-blue-500 hover:text-blue-600"
+              >
                 <FaEdit />
-              </button>
+              </Link>
               <button className="text-red-500 hover:text-red-600">
                 <FaTrash />
               </button>
