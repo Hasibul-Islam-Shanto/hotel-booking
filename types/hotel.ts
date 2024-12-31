@@ -1,5 +1,5 @@
 type Hotel = {
-  _id: string;
+  _id?: string;
   propertyName: string;
   propertyLocation: string;
   images: string[];
@@ -10,8 +10,8 @@ type Hotel = {
   beds: number;
   description: string;
   facilities: string[];
-  user: string;
-  createdAt: string;
-  updatedAt: string;
+  user?: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 export default Hotel;

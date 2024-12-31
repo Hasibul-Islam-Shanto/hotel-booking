@@ -9,8 +9,12 @@ import Image from "next/image";
 import CustomInput from "../hotel-create/CustomInput";
 import CustomTextarea from "../hotel-create/CustomTextarea";
 import { facilitiesData } from "@/utils/facilitiesData";
+import { formattedDataForHotel } from "@/utils/helper";
+import { useRouter } from "next/navigation";
+import { updateHotelDetails } from "@/lib/api/post-api";
 
 const HotelEditForm = ({ hotel }: { hotel: hotelType }) => {
+  const router = useRouter();
   const { register, watch, handleSubmit } = useForm<Hotel>({
     resolver: zodResolver(hotelSchema),
     defaultValues: {
@@ -46,7 +50,11 @@ const HotelEditForm = ({ hotel }: { hotel: hotelType }) => {
     description,
   } = watch();
   const onSubmit = async (data: Hotel) => {
-    console.log(data);
+    const formattedData = formattedDataForHotel(data);
+    const response = await updateHotelDetails(hotel?._id, formattedData);
+    if (response.status === 200) {
+      router.push("/hotels/hotel-manage");
+    }
   };
   return (
     <>

@@ -1,22 +1,22 @@
-import { auth } from "@/auth";
 import connectMongo from "@/config/dbConnect";
 import Hotel from "@/model/hotelModel";
-import User from "@/model/userModel";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const email = searchParams.get("email");
-  const session = await auth();
-  console.log(session);
-
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const data = await request.json();
   try {
     await connectMongo();
-    const user = await User.findOne({ email: email });
-    const hotels = await Hotel.find({ user: user?._id });
+    const updatedHotel = await Hotel.findByIdAndUpdate(params.id, data);
+    revalidatePath("/");
+    revalidatePath("/hotels/hotel-manage");
     return NextResponse.json({
       status: 200,
-      hotels,
+      updatedHotel,
+      message: "Hotel updated successfully!",
     });
   } catch (error) {
     if (error instanceof Error) {

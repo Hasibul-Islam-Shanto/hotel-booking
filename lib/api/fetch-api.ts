@@ -6,6 +6,7 @@ export const fetchHotels = async () => {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   });
   const res = await response.json();
   revalidatePath("/");
@@ -18,6 +19,7 @@ export const fetchHotel = async (id: string) => {
     headers: {
       "Content-Type": "application/json",
     },
+    cache: "no-store",
   });
   const res = await response.json();
   return res;
@@ -31,6 +33,22 @@ export const fetchOwnerHotels = async (email: string) => {
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-store",
+    }
+  );
+  const res = await response.json();
+  return res;
+};
+
+export const fetchPayment = async (id: string) => {
+  const response = await fetch(
+    `http://localhost:3000/api/hotels/payment/${id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
     }
   );
   const res = await response.json();

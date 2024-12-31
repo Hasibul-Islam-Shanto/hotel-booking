@@ -10,7 +10,7 @@ export async function GET(
     await connectMongo();
     const hotel = await Hotel.findById(params.id).populate({
       path: "user",
-      select: "name",
+      select: "name email",
     });
     return NextResponse.json({
       status: 200,

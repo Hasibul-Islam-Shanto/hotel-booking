@@ -1,22 +1,20 @@
-import { auth } from "@/auth";
 import connectMongo from "@/config/dbConnect";
-import Hotel from "@/model/hotelModel";
-import User from "@/model/userModel";
+import Payment from "@/model/paymentModel";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: NextRequest) {
-  const { searchParams } = new URL(request.url);
-  const email = searchParams.get("email");
-  const session = await auth();
-  console.log(session);
-
+export async function GET(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     await connectMongo();
-    const user = await User.findOne({ email: email });
-    const hotels = await Hotel.find({ user: user?._id });
+    const payment = await Payment.findById(params.id).populate({
+      path: "hotel",
+      select: "propertyName propertyLocation images pricePerNight ",
+    });
     return NextResponse.json({
       status: 200,
-      hotels,
+      payment,
     });
   } catch (error) {
     if (error instanceof Error) {
