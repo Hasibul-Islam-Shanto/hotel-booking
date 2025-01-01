@@ -54,3 +54,30 @@ export const fetchPayment = async (id: string) => {
   const res = await response.json();
   return res;
 };
+
+export const fetchBookings = async (email: string | null) => {
+  const response = await fetch(
+    `http://localhost:3000/api/hotels/payment/owned-payment?email=${email}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
+  const res = await response.json();
+  return res;
+};
+
+export const fetchReviews = async () => {
+  const response = await fetch("http://localhost:3000/api/hotels/review/get", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
+  const res = await response.json();
+  return res;
+};

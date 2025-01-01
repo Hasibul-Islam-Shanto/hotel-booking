@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import connectMongo from "@/config/dbConnect";
+import Hotel from "@/model/hotelModel";
 import Payment from "@/model/paymentModel";
 import User from "@/model/userModel";
 import { NextRequest, NextResponse } from "next/server";
@@ -8,6 +9,7 @@ export async function POST(request: NextRequest) {
   try {
     await connectMongo();
     const session = await auth();
+    const data = await request.json();
     const user = await User.findOne({ email: session?.user?.email });
     if (!user) {
       return NextResponse.json({
@@ -15,8 +17,17 @@ export async function POST(request: NextRequest) {
         message: "User not found!",
       });
     }
-    const data = await request.json();
-    console.log(data);
+    const roomsCount = data?.guests > 2 ? Math.ceil(data?.guests / 2) : 1;
+
+    await Hotel.findByIdAndUpdate(data?.hotel, {
+      $inc: {
+        rooms: -roomsCount,
+        bedrooms: -roomsCount,
+        guests: -data?.guests,
+        beds: -roomsCount,
+      },
+    });
+
     const payment = new Payment({
       checkInDate: data.checkIn,
       checkoutDate: data.checkOut,

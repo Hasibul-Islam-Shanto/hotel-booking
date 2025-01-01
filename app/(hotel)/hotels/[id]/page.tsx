@@ -1,10 +1,12 @@
-import Reviews from "@/components/hotel/Reviews";
 import { FaStar } from "react-icons/fa";
 import { fetchHotel } from "@/lib/api/fetch-api";
 import { notFound } from "next/navigation";
 import ImageGallery from "@/components/hotel/ImageGallery";
 import { auth } from "@/auth";
 import BookHotel from "@/components/hotel/BookHotel";
+import { Suspense } from "react";
+import Spinner from "@/components/ui/Spinner";
+import ReviewContainer from "@/components/hotel/ReviewContainer";
 
 const HotelDetails = async ({ params }: { params: { id: string } }) => {
   const session = await auth();
@@ -57,7 +59,6 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
               </div>
             </div>
 
-            {/* <!-- Description --> */}
             <div className="mb-6">
               <h3 className="text-xl font-semibold mb-4">About this place</h3>
               <p className="text-gray-700 leading-relaxed">
@@ -65,7 +66,6 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
               </p>
             </div>
 
-            {/* <!-- Amenities --> */}
             <div>
               <h3 className="text-xl font-semibold mb-4">
                 What this place offers
@@ -73,7 +73,6 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
               <div className="grid grid-cols-2 gap-4">
                 {hotel?.facilities.map((facility: string) => (
                   <div key={facility} className="flex items-center gap-2">
-                    {/* <i className="fa-solid fa-umbrella-beach"></i> */}
                     <span>{facility}</span>
                   </div>
                 ))}
@@ -83,29 +82,15 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
           {!isOwnerOfHotel && <BookHotel hotel={hotel} />}
         </div>
       </div>
-
-      {/* <!-- Reviews Section --> */}
-      <div className="max-w-7xl mx-auto px-6 py-12 border-t">
-        {/* <!-- Reviews Header with Average Rating --> */}
-        <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-4">
-            <h2 className="text-2xl font-semibold">Reviews</h2>
-            <div className="flex items-center">
-              <i className="fas fa-star text-yellow-500 mr-2"></i>
-              <span className="text-xl font-semibold">4.9</span>
-              <span className="mx-2">·</span>
-              <span className="text-gray-600">2 reviews</span>
-            </div>
+      <Suspense
+        fallback={
+          <div className="w-full flex justify-center items-center">
+            <Spinner className="h-10 w-10 border-t-primary" />
           </div>
-          {!isOwnerOfHotel && (
-            <button className="px-4 py-2 border border-gray-900 rounded-lg hover:bg-gray-100">
-              Write a Review
-            </button>
-          )}
-        </div>
-
-        <Reviews />
-      </div>
+        }
+      >
+        <ReviewContainer isOwnerOfHotel={isOwnerOfHotel} hotel={hotel} />
+      </Suspense>
     </>
   );
 };

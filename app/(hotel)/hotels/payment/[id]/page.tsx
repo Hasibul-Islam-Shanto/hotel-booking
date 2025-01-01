@@ -1,13 +1,15 @@
-import PaymentCheckoutDetails from "@/components/payment/PaymentCheckoutDetails";
-import PaymentForm from "@/components/payment/PaymentForm";
+import PaymentContainer from "@/components/payment/PaymentContainer";
 import { fetchPayment } from "@/lib/api/fetch-api";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { FaChevronLeft } from "react-icons/fa";
 
 const PaymentDetails = async ({ params }: { params: { id: string } }) => {
   const response = await fetchPayment(params.id);
   const payment = response.payment;
-  console.log(payment);
+  if (payment.status === "completed") {
+    redirect(`/payment/success/${payment._id}`);
+  }
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -21,10 +23,7 @@ const PaymentDetails = async ({ params }: { params: { id: string } }) => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-          <PaymentForm />
-          <PaymentCheckoutDetails />
-        </div>
+        <PaymentContainer payment={payment} />
       </div>
     </>
   );

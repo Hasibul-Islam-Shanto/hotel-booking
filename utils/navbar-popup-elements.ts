@@ -19,21 +19,16 @@ export const navbarPopupElements = [
 export const loggedInNavbarPopupElements = [
   {
     id: 1,
-    title: "Profile",
-    url: "/profile",
-  },
-  {
-    id: 2,
     title: "Bookings",
     url: "/hotels/bookings",
   },
   {
-    id: 3,
+    id: 2,
     title: "Create Hotel",
     url: "/hotels/create",
   },
   {
-    id: 4,
+    id: 3,
     title: "Manage Hotels",
     url: "/hotels/hotel-manage",
   },

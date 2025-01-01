@@ -6,6 +6,8 @@ import { FaBars } from "react-icons/fa6";
 import PopupElementWithLogin from "@/components/utils/PopupElementWithLogin";
 import PopupElementWithoutLogin from "@/components/utils/PopupElementWithoutLogin";
 import { Session } from "next-auth";
+import Image from "next/image";
+import { avatar } from "@/utils/helper";
 
 interface PropsType {
   session: Session | null;
@@ -46,13 +48,28 @@ const UserInteraction = ({ session }: PropsType) => {
           className="bg-white border border-zinc-300 text-zinc-800 px-4 py-2 rounded-full hover:shadow-md flex gap-3 items-center justify-center"
         >
           <FaBars />
-          <span className="bg-zinc-600 w-6 h-6 rounded-full flex items-center justify-center text-xs text-white">
-            {session?.user?.name ? (
-              session?.user?.name?.slice(0, 2)
-            ) : (
+          {session?.user?.image ? (
+            <Image
+              src={session?.user?.image}
+              height={30}
+              width={30}
+              alt="profile-image"
+              className="rounded-full"
+            />
+          ) : (
+            <Image
+              src={avatar}
+              height={30}
+              width={30}
+              alt="profile-image"
+              className=""
+            />
+          )}
+          {!session?.user && (
+            <span className="bg-zinc-600 w-6 h-6 rounded-full flex items-center justify-center text-xs text-white">
               <FaUser className="text-white" />
-            )}
-          </span>
+            </span>
+          )}
         </button>
 
         {isPopupOpen && (
