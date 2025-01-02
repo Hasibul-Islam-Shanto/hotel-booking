@@ -11,6 +11,7 @@ type Hotel = {
   description: string;
   facilities: string[];
   user?: string;
+  averageRating?: number;
   createdAt?: string;
   updatedAt?: string;
 };

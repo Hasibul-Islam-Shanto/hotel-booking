@@ -56,6 +56,10 @@ const UserInteraction = ({ session }: PropsType) => {
               alt="profile-image"
               className="rounded-full"
             />
+          ) : !session?.user ? (
+            <span className="bg-zinc-600 w-6 h-6 rounded-full flex items-center justify-center text-xs text-white">
+              <FaUser className="text-white" />
+            </span>
           ) : (
             <Image
               src={avatar}
@@ -64,11 +68,6 @@ const UserInteraction = ({ session }: PropsType) => {
               alt="profile-image"
               className=""
             />
-          )}
-          {!session?.user && (
-            <span className="bg-zinc-600 w-6 h-6 rounded-full flex items-center justify-center text-xs text-white">
-              <FaUser className="text-white" />
-            </span>
           )}
         </button>
 

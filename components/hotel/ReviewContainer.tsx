@@ -11,11 +11,13 @@ const ReviewContainer = async ({
   isOwnerOfHotel: boolean;
   hotel: Hotel;
 }) => {
-  const response = await fetchReviews();
+  const response = await fetchReviews(hotel._id);
   const reviews = response.reviews;
 
-  const sumRating = reviews.reduce((acc, review) => acc + review.rating, 0);
-  const averageRating = sumRating / reviews.length;
+  const sumRating =
+    reviews?.length > 0 &&
+    reviews.reduce((acc, review) => acc + review.rating, 0);
+  const averageRating = sumRating && sumRating / reviews.length;
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-12 border-t">
@@ -23,8 +25,13 @@ const ReviewContainer = async ({
           <div className="flex items-center gap-4">
             <h2 className="text-2xl font-semibold">Reviews</h2>
             <div className="flex items-center">
-              <FaStar className="text-yellow-400 text-xl" />
-              <span className="text-xl font-semibold">{averageRating}</span>
+              {averageRating > 0 && (
+                <>
+                  <FaStar className="text-yellow-400 text-xl" />
+                  <span className="text-xl font-semibold">{averageRating}</span>
+                </>
+              )}
+
               <span className="mx-2">·</span>
               <span className="text-gray-600">{reviews?.length} reviews</span>
             </div>

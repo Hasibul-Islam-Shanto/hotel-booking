@@ -15,7 +15,7 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
   const hotel = response.hotel;
   const user = hotel?.user;
   const isOwnerOfHotel = session?.user?.email === user?.email;
-  console.log(user);
+
   if (!hotel) {
     return notFound();
   }
@@ -27,8 +27,8 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
           <h1 className="text-3xl font-bold mb-2">{hotel?.propertyName}</h1>
           <div className="flex items-center text-gray-600">
             <FaStar className="text-yellow-500 mr-1" />
-            <span>5 · </span>
-            <span className="ml-2">2 reviews</span>
+            <span>{hotel?.averageRating} · </span>
+            <span className="ml-2">{hotel?.totalReviews} reviews</span>
             <span className="mx-2">·</span>
             <span className="">{hotel?.propertyLocation}</span>
           </div>

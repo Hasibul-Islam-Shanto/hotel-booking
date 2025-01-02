@@ -5,7 +5,7 @@ import { FaCircleInfo } from "react-icons/fa6";
 
 const HomePage = async () => {
   const response = await fetchHotels();
-  const hotels = response.hotels;
+  const hotels = response.hotelsWithRatings;
   console.log(response);
   return (
     <>

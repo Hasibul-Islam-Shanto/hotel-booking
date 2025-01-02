@@ -6,14 +6,19 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import Spinner from "../ui/Spinner";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const PaymentForm = ({ payment }: { payment: Payment }) => {
   const router = useRouter();
+  const [isDateEditMode, setIsDateEditMode] = useState<boolean>(false);
+  const [isGuestsEditMode, setIsGuestsEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
   const {
     watch,
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useFormContext<PaymentSchema>();
   const data = watch();
@@ -60,25 +65,79 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
         )}
         <section className="mb-8">
           <h2 className="text-xl font-semibold mb-4">Your trip</h2>
-          <div className="flex justify-between items-center mb-4">
-            <div>
-              <h3 className="font-medium">Dates</h3>
-              <p className="text-zinc-600 text-sm">
-                {formattedDate(data?.checkInDate) +
-                  " - " +
-                  formattedDate(data?.checkoutDate)}
-              </p>
+          {isDateEditMode ? (
+            <div className="flex items-center gap-2">
+              <DatePicker
+                placeholderText="Check in"
+                className="p-3 w-full border border-gray-400 rounded-md"
+                selected={data?.checkInDate}
+                onChange={(date) => date && setValue("checkInDate", date)}
+              />
+              <DatePicker
+                placeholderText="Check out"
+                className="p-3 w-full border border-gray-400 rounded-md"
+                selected={data?.checkoutDate}
+                onChange={(date) => date && setValue("checkoutDate", date)}
+              />
+              <button
+                type="button"
+                onClick={() => setIsDateEditMode(false)}
+                className="flex items-center justify-center gap-2 text-center bg-primary text-white py-3 px-5 rounded-lg transition-all hover:brightness-90"
+              >
+                Save
+              </button>
             </div>
-            <button className="text-zinc-800 underline text-sm">Edit</button>
-          </div>
-
-          <div className="flex justify-between items-center">
-            <div>
-              <h3 className="font-medium">Guests</h3>
-              <p className="text-zinc-600 text-sm">{data?.guests} guest</p>
+          ) : (
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h3 className="font-medium">Dates</h3>
+                <p className="text-zinc-600 text-sm">
+                  {formattedDate(data?.checkInDate) +
+                    " - " +
+                    formattedDate(data?.checkoutDate)}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsDateEditMode(true)}
+                className="text-zinc-800 underline text-sm"
+              >
+                Edit
+              </button>
             </div>
-            <button className="text-zinc-800 underline text-sm">Edit</button>
-          </div>
+          )}
+          {isGuestsEditMode ? (
+            <div className="flex items-center gap-2">
+              <input
+                type="number"
+                placeholder="Guests"
+                className="w-full p-3 border border-gray-400 rounded-md"
+                value={data?.guests}
+                onChange={(e) => setValue("guests", Number(e.target.value))}
+              />
+              <button
+                type="button"
+                onClick={() => setIsGuestsEditMode(false)}
+                className="flex items-center justify-center gap-2 text-center bg-primary text-white py-3 px-5 rounded-lg transition-all hover:brightness-90"
+              >
+                Save
+              </button>
+            </div>
+          ) : (
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="font-medium">Guests</h3>
+                <p className="text-zinc-600 text-sm">{data?.guests} guest</p>
+              </div>
+              <button
+                onClick={() => setIsGuestsEditMode(true)}
+                type="button"
+                className="text-zinc-800 underline text-sm"
+              >
+                Edit
+              </button>
+            </div>
+          )}
         </section>
 
         <section className="mb-8">

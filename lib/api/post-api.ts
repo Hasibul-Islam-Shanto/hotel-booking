@@ -60,3 +60,14 @@ export const postReview = async (data: {
   const res = await response.json();
   return res;
 };
+
+export const deleteReview = async (id: string | undefined) => {
+  const response = await fetch(`/api/hotels/review/delete?id=${id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await response.json();
+  return res;
+};

@@ -1,7 +1,8 @@
 import { auth } from "@/auth";
 import { formattedDate } from "@/utils/helper";
 import Image from "next/image";
-import { FaStar, FaTrash } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import ReviewDeleteButton from "./ReviewDeleteButton";
 
 const Reviews = async ({ reviews }) => {
   const session = await auth();
@@ -15,7 +16,11 @@ const Reviews = async ({ reviews }) => {
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
                   <Image
-                    src="https://avatar.iran.liara.run/public"
+                    src={
+                      review?.user?.image
+                        ? review?.user?.image
+                        : "https://avatar.iran.liara.run/public"
+                    }
                     height={48}
                     width={48}
                     alt="User avatar"
@@ -30,7 +35,7 @@ const Reviews = async ({ reviews }) => {
                 </div>
               </div>
               {session?.user?.email === review?.user?.email && (
-                <FaTrash className="text-red-400 text-md" />
+                <ReviewDeleteButton id={review._id} />
               )}
             </div>
             <div className="flex items-center">

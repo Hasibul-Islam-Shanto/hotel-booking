@@ -42,10 +42,7 @@ const PaymentStatus = async ({ params }: { params: { id: string } }) => {
               <h2 className="text-2xl font-semibold mb-2">
                 {payment?.hotel?.propertyName}
               </h2>
-              <div className="flex items-center mb-2">
-                <i className="fas fa-star text-sm mr-1"></i>
-                <span className="text-sm">4.6 (500+ reviews)</span>
-              </div>
+
               <p className="text-zinc-600">
                 {payment?.hotel?.propertyLocation}
               </p>

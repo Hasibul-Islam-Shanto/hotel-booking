@@ -5,9 +5,11 @@ import User from "@/model/userModel";
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: NextRequest) {
+export async function DELETE(request: NextRequest) {
   try {
     await connectMongo();
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
     const session = await auth();
     const user = await User.findOne({ email: session?.user?.email });
     if (!user) {
@@ -16,33 +18,26 @@ export async function POST(request: NextRequest) {
         message: "User not found",
       });
     }
-    const data = await request.json();
-    const isReviewExist = await Review.findOne({
+
+    const isUserOwnTheReview = await Review.findOne({
+      _id: id,
       user: user._id,
-      hotel: data.hotelId,
     });
 
-    if (isReviewExist) {
+    if (!isUserOwnTheReview) {
       return NextResponse.json({
         status: 400,
-        message: "You have already posted a review for this hotel",
+        message: "You are not authorized to delete this review",
       });
     }
-
-    const review = new Review({
-      user: user._id,
-      hotel: data.hotelId,
-      rating: data.rating,
-      description: data.description,
-    });
-    await review.save();
-    revalidatePath(`/hotels/${data?.hotelId}`);
+    await Review.findByIdAndDelete({ _id: id });
+    revalidatePath(`/hotels/${isUserOwnTheReview._id}`);
     return NextResponse.json({
       status: 200,
-      review,
-      message: "Review posted successfully",
+      message: "Review deleted successfully",
     });
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({
         status: 500,

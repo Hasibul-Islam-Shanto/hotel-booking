@@ -15,7 +15,10 @@ export async function GET(request: NextRequest) {
         message: "User not found",
       });
     }
-    const ownedPayment = await Payment.find({ user: user?._id }).populate({
+    const ownedPayment = await Payment.find({
+      user: user?._id,
+      status: "completed",
+    }).populate({
       path: "hotel",
       select: "propertyName propertyLocation images ",
     });
