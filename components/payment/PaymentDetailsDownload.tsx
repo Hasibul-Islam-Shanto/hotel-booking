@@ -1,5 +1,4 @@
 "use client";
-
 import { Payment } from "@/types/payment";
 import { FaDownload } from "react-icons/fa6";
 import jsPDF from "jspdf";
@@ -23,6 +22,7 @@ const PaymentDetailsDownload = ({ payment }: { payment: Payment }) => {
     doc.text(`Status: ${payment.status}`, 20, 110);
     doc.save("payment-receipt.pdf");
   };
+
   return (
     <>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">

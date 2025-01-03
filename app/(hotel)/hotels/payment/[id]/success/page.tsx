@@ -12,7 +12,6 @@ import {
 } from "react-icons/fa";
 
 const PaymentStatus = async ({ params }: { params: { id: string } }) => {
-  console.log(params.id);
   const response = await fetchPayment(params.id);
   const payment = response.payment;
   console.log(payment);
