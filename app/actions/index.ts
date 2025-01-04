@@ -19,3 +19,14 @@ export async function login(formData: FormData) {
     return checkAuthError(error);
   }
 }
+
+export async function deleteHotel(id: string | undefined) {
+  const response = await fetch(`/api/hotels/${id}/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await response.json();
+  return res;
+}

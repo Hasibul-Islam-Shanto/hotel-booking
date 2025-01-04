@@ -1,7 +1,8 @@
 import Hotel from "@/types/hotel";
 import Image from "next/image";
 import Link from "next/link";
-import { FaEdit, FaStar, FaTrash } from "react-icons/fa";
+import { FaEdit, FaStar } from "react-icons/fa";
+import HotelDeleteButton from "./HotelDeleteButton";
 
 const HotManageCard = ({ hotel }: { hotel: Hotel }) => {
   return (
@@ -41,9 +42,7 @@ const HotManageCard = ({ hotel }: { hotel: Hotel }) => {
               >
                 <FaEdit />
               </Link>
-              <button className="text-red-500 hover:text-red-600">
-                <FaTrash />
-              </button>
+              <HotelDeleteButton id={hotel?._id} />
             </div>
           </div>
         </div>

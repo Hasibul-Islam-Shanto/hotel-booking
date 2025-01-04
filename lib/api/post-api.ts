@@ -71,3 +71,14 @@ export const deleteReview = async (id: string | undefined) => {
   const res = await response.json();
   return res;
 };
+
+export const deleteHotel = async (id: string | undefined) => {
+  const response = await fetch(`/api/hotels/${id}/delete`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const res = await response.json();
+  return res;
+};
