@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
       path: "hotel",
       select: "propertyName propertyLocation images ",
     });
-
+    console.log("owned payment", ownedPayment);
     return NextResponse.json({
       status: 200,
       bookings: ownedPayment,

@@ -18,6 +18,20 @@ export async function POST(request: NextRequest) {
       });
     }
     const roomsCount = data?.guests > 2 ? Math.ceil(data?.guests / 2) : 1;
+    const hotelDetails = await Hotel.findById({ _id: data?.hotel });
+
+    if (
+      hotelDetails &&
+      (hotelDetails?.rooms < roomsCount ||
+        hotelDetails?.bedrooms < roomsCount ||
+        hotelDetails?.guests < data?.guests ||
+        hotelDetails?.beds < roomsCount)
+    ) {
+      return NextResponse.json({
+        status: 400,
+        message: "Rooms are not available",
+      });
+    }
 
     await Hotel.findByIdAndUpdate(data?.hotel, {
       $inc: {
