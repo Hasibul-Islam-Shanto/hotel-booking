@@ -1,6 +1,5 @@
 import { FaStar } from "react-icons/fa";
 import { fetchHotel } from "@/lib/api/fetch-api";
-import { notFound } from "next/navigation";
 import ImageGallery from "@/components/hotel/ImageGallery";
 import { auth } from "@/auth";
 import BookHotel from "@/components/hotel/BookHotel";
