@@ -7,11 +7,18 @@ import BookHotel from "@/components/hotel/BookHotel";
 import { Suspense } from "react";
 import Spinner from "@/components/ui/Spinner";
 import ReviewContainer from "@/components/hotel/ReviewContainer";
+import {
+  FaDumbbell,
+  FaSink,
+  FaSquareParking,
+  FaUmbrellaBeach,
+  FaWifi,
+} from "react-icons/fa6";
+import { MdPool } from "react-icons/md";
 
 const HotelDetails = async ({ params }: { params: { id: string } }) => {
   const session = await auth();
   const response = await fetchHotel(params.id);
-  console.log(response);
   const hotel = response.hotel;
   const user = hotel?.user;
   const isOwnerOfHotel = session?.user?.email === user?.email;
@@ -22,7 +29,6 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* <!-- Property Title and Rating --> */}
         <div className="mb-6">
           <h1 className="text-3xl font-bold mb-2">{hotel?.propertyName}</h1>
           <div className="flex items-center text-gray-600">
@@ -37,7 +43,6 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
         <ImageGallery images={hotel?.images} />
 
         <div className="grid grid-cols-3 gap-8">
-          {/* <!-- Left Column: Property Description --> */}
           <div className="col-span-2">
             <div className="border-b pb-6 mb-6">
               <h2 className="text-2xl font-semibold mb-4">
@@ -73,6 +78,12 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
               <div className="grid grid-cols-2 gap-4">
                 {hotel?.facilities.map((facility: string) => (
                   <div key={facility} className="flex items-center gap-2">
+                    {facility === "Free Wifi" && <FaWifi />}
+                    {facility === "Fitness Center" && <FaDumbbell />}
+                    {facility === "Beach Access" && <FaUmbrellaBeach />}
+                    {facility === "Free Parking" && <FaSquareParking />}
+                    {facility === "Kitchen" && <FaSink />}
+                    {facility === "Private Pool" && <MdPool />}
                     <span>{facility}</span>
                   </div>
                 ))}

@@ -18,7 +18,7 @@ const HotManageCard = ({ hotel }: { hotel: Hotel }) => {
           />
           <div className="absolute flex items-center gap-1 top-4 right-4 bg-white/80 px-3 py-1 rounded-full text-sm font-semibold">
             <FaStar className="text-yellow-500" />
-            4.9
+            {hotel?.averageRating}
           </div>
         </div>
         <div className="p-4">

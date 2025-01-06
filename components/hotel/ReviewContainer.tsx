@@ -17,7 +17,7 @@ const ReviewContainer = async ({
   const sumRating =
     reviews?.length > 0 &&
     reviews.reduce((acc, review) => acc + review.rating, 0);
-  const averageRating = sumRating && sumRating / reviews.length;
+  const averageRating = sumRating ? sumRating / reviews.length : 0;
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-12 border-t">

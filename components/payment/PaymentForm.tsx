@@ -22,7 +22,6 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
     formState: { errors },
   } = useFormContext<PaymentSchema>();
   const data = watch();
-  console.log(payment._id);
 
   const days = calculateDays(data.checkInDate, data.checkoutDate);
   const guests = data.guests;
@@ -41,13 +40,12 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
       guests: data.guests,
       totalCosts: totalCost,
       cardNumber: data.cardNumber,
-      user: payment.user,
-      hotel:
-        typeof payment.hotel === "string" ? payment.hotel : payment.hotel?._id,
+      user: payment.user?._id as string,
+      hotel: payment.hotel?._id as string,
       status: "completed",
     };
 
-    const response = await updatePayment(payment._id, formatedData);
+    const response = await updatePayment(payment?._id, formatedData);
     setLoading(false);
     if (response.status === 200) {
       router.push(`/hotels/payment/${response?.updatePayment?._id}/success`);

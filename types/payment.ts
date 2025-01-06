@@ -1,4 +1,5 @@
 import Hotel from "./hotel";
+import User from "./user";
 
 export type Payment = {
   _id?: string;
@@ -7,9 +8,21 @@ export type Payment = {
   guests: number;
   cardNumber?: string;
   totalCosts?: number;
-  user: string;
-  hotel: string | Hotel;
+  user: User;
+  hotel: Hotel;
   status: "pending" | "completed";
   createdAt?: Date;
   updatedAt?: Date;
+};
+
+export type FormattedPayment = {
+  _id?: string;
+  checkInDate: Date;
+  checkoutDate: Date;
+  guests: number;
+  cardNumber?: string;
+  totalCosts?: number;
+  user: string;
+  hotel: string;
+  status: string;
 };

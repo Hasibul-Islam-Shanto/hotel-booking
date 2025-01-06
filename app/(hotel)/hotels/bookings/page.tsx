@@ -7,9 +7,8 @@ const Bookings = async () => {
   const session = await auth();
   const email = session?.user?.email ?? null;
   const response = await fetchBookings(email);
-  console.log(response);
   const bookings = response.bookings;
-  console.log(bookings);
+
   return (
     <>
       <div className="max-w-4xl mx-auto px-4 py-8">

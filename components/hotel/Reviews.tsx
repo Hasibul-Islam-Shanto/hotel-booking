@@ -3,8 +3,9 @@ import { formattedDate } from "@/utils/helper";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import ReviewDeleteButton from "./ReviewDeleteButton";
+import Review from "@/types/reviews";
 
-const Reviews = async ({ reviews }) => {
+const Reviews = async ({ reviews }: { reviews: Review[] }) => {
   const session = await auth();
 
   return (

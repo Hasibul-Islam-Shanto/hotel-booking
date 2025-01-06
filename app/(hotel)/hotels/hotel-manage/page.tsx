@@ -27,9 +27,6 @@ const HotelManage = async () => {
             hotels.map((hotel: Hotel) => (
               <HotManageCard key={hotel._id} hotel={hotel} />
             ))}
-          {/* <HotManageCard />
-          <HotManageCard />
-          <HotManageCard /> */}
         </div>
       </div>
     </>

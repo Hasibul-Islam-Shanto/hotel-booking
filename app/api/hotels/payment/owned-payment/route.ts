@@ -19,10 +19,9 @@ export async function GET(request: NextRequest) {
       user: user?._id,
       status: "completed",
     }).populate({
-      path: "hotel",
-      select: "propertyName propertyLocation images ",
+      path: "hotel user",
+      select: "-password",
     });
-    console.log("owned payment", ownedPayment);
     return NextResponse.json({
       status: 200,
       bookings: ownedPayment,

@@ -2,14 +2,14 @@ import { Payment } from "@/types/payment";
 import { generatePdfBase64 } from "@/utils/receipt-download";
 import { Resend } from "resend";
 
-export async function sendEmail(payment: Payment, email: string) {
+export async function sendEmail(payment: Payment, email: string | undefined) {
   const pdfBase64 = generatePdfBase64(payment);
   const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
   console.log("Sending email to", email);
   try {
     await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",
-      to: email,
+      to: email as string,
       subject: "Payment Receipt",
       text: "Please find the attached payment receipt",
       attachments: [

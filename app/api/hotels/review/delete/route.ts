@@ -37,7 +37,6 @@ export async function DELETE(request: NextRequest) {
       message: "Review deleted successfully",
     });
   } catch (error) {
-    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({
         status: 500,

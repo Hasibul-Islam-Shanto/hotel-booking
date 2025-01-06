@@ -10,9 +10,13 @@ import CustomTextarea from "./CustomTextarea";
 import { facilitiesData } from "@/utils/facilitiesData";
 import { formattedDataForHotel } from "@/utils/helper";
 import { useRouter } from "next/navigation";
+import { createHotel } from "@/lib/api/post-api";
+import { useState } from "react";
+import Spinner from "../ui/Spinner";
 
 const HotelCreateForm = () => {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const {
     register,
     watch,
@@ -39,15 +43,10 @@ const HotelCreateForm = () => {
   } = watch();
 
   const onSubmit = async (data: Hotel) => {
+    setLoading(true);
     const formattedData = formattedDataForHotel(data);
-    const response = await fetch("/api/hotels/create", {
-      method: "POST",
-      body: JSON.stringify(formattedData),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const res = await response.json();
+    const res = await createHotel(formattedData);
+    setLoading(false);
     if (res.status === 200) {
       router.push("/");
     }
@@ -72,10 +71,10 @@ const HotelCreateForm = () => {
           type="submit"
           className="px-4 py-2 flex items-center gap-x-2 bg-primary text-white rounded-lg hover:brightness-90 absolute top-4 right-4"
         >
-          <FaSave />
+          {loading ? <Spinner className="h-7 w-7" /> : <FaSave />}
           Publish
         </button>
-        {/* <!-- Property Title and Rating --> */}
+
         <div className="mb-6">
           <CustomInput
             {...register("propertyName")}
@@ -91,7 +90,6 @@ const HotelCreateForm = () => {
           />
         </div>
 
-        {/* <!-- Image Gallery --> */}
         <div className="grid grid-cols-4 grid-rows-2 gap-4 mb-8 h-[500px]">
           <div className="col-span-2 row-span-2 relative">
             <Image

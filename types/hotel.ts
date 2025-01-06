@@ -1,3 +1,5 @@
+import User from "./user";
+
 type Hotel = {
   _id?: string;
   propertyName: string;
@@ -10,9 +12,12 @@ type Hotel = {
   beds: number;
   description: string;
   facilities: string[];
-  user?: string;
+  user: User;
   averageRating?: number;
+  totalReviews?: number;
   createdAt?: string;
   updatedAt?: string;
 };
 export default Hotel;
+
+export type HotelWithoutUser = Omit<Hotel, "user">;

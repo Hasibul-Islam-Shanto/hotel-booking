@@ -6,6 +6,7 @@ import { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Spinner from "../ui/Spinner";
+import { FaStar } from "react-icons/fa6";
 
 const BookHotel = ({ hotel }: { hotel: Hotel }) => {
   const router = useRouter();
@@ -54,15 +55,14 @@ const BookHotel = ({ hotel }: { hotel: Hotel }) => {
               <span className="text-xl font-bold">${hotel?.pricePerNight}</span>
               <span className="text-gray-600 ml-1">per night</span>
             </div>
-            <div className="flex items-center">
-              {/* todo add rating */}
-              {/* <i className="fas fa-star text-yellow-500 mr-1"></i>
-                  <span>5</span> */}
+            <div className="flex items-center gap-1">
+              <FaStar className="text-yellow-400" />
+              <span>{hotel?.averageRating}</span>
             </div>
           </div>
 
           <div className="border rounded-lg mb-4">
-            <div className="grid grid-cols-2 border-b">
+            <div className="flex items-center px-1 border-b">
               <DatePicker
                 placeholderText="Check in"
                 className="p-3 w-full border-r"

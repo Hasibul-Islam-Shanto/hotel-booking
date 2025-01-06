@@ -27,8 +27,8 @@ export const formattedDataForHotel = (data: Hotel) => {
   return formattedData;
 };
 
-export const formattedDate = (date: Date) => {
-  const givenDate = new Date(date);
+export const formattedDate = (date: Date | undefined) => {
+  const givenDate = new Date(date!);
 
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",

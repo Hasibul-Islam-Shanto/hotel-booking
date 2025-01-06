@@ -10,7 +10,7 @@ export async function GET(
     await connectMongo();
     const payment = await Payment.findById(params.id).populate({
       path: "hotel",
-      select: "propertyName propertyLocation images pricePerNight ",
+      select: "propertyName propertyLocation images pricePerNight",
     });
     return NextResponse.json({
       status: 200,

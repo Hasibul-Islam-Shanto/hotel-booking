@@ -1,7 +1,15 @@
+import Hotel from "@/types/hotel";
+import { Payment } from "@/types/payment";
+import Review from "@/types/reviews";
 import { revalidatePath } from "next/cache";
 
-export const fetchHotels = async () => {
-  const response = await fetch("http://localhost:3000/api/hotels/get", {
+const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+interface HotelsResponse {
+  status: number;
+  hotels: Hotel[];
+}
+export const fetchHotels = async (): Promise<HotelsResponse> => {
+  const response = await fetch(`${apiBaseUrl}/api/hotels/get`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -13,8 +21,12 @@ export const fetchHotels = async () => {
   return res;
 };
 
-export const fetchHotel = async (id: string) => {
-  const response = await fetch(`http://localhost:3000/api/hotels/${id}`, {
+interface HotelResponse {
+  status: number;
+  hotel: Hotel;
+}
+export const fetchHotel = async (id: string): Promise<HotelResponse> => {
+  const response = await fetch(`${apiBaseUrl}/api/hotels/${id}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -27,7 +39,7 @@ export const fetchHotel = async (id: string) => {
 
 export const fetchOwnerHotels = async (email: string) => {
   const response = await fetch(
-    `http://localhost:3000/api/hotels/owner-hotels?email=${email}`,
+    `${apiBaseUrl}/api/hotels/owner-hotels?email=${email}`,
     {
       method: "GET",
       headers: {
@@ -41,8 +53,26 @@ export const fetchOwnerHotels = async (email: string) => {
 };
 
 export const fetchPayment = async (id: string) => {
+  const response = await fetch(`${apiBaseUrl}/api/hotels/payment/${id}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    cache: "no-store",
+  });
+  const res = await response.json();
+  return res;
+};
+
+interface BookingsResponse {
+  status: number;
+  bookings: Payment[];
+}
+export const fetchBookings = async (
+  email: string | null
+): Promise<BookingsResponse> => {
   const response = await fetch(
-    `http://localhost:3000/api/hotels/payment/${id}`,
+    `${apiBaseUrl}/api/hotels/payment/owned-payment?email=${email}`,
     {
       method: "GET",
       headers: {
@@ -55,24 +85,15 @@ export const fetchPayment = async (id: string) => {
   return res;
 };
 
-export const fetchBookings = async (email: string | null) => {
+interface ReviewsResponse {
+  status: number;
+  reviews: Review[];
+}
+export const fetchReviews = async (
+  id: string | undefined
+): Promise<ReviewsResponse> => {
   const response = await fetch(
-    `http://localhost:3000/api/hotels/payment/owned-payment?email=${email}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
-    }
-  );
-  const res = await response.json();
-  return res;
-};
-
-export const fetchReviews = async (id: string | undefined) => {
-  const response = await fetch(
-    `http://localhost:3000/api/hotels/review/get?hotelId=${id}`,
+    `${apiBaseUrl}/api/hotels/review/get?hotelId=${id}`,
     {
       method: "GET",
       headers: {

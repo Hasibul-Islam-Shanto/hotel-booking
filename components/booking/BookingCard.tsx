@@ -16,10 +16,10 @@ const BookingCard = ({ booking }: { booking: Payment }) => {
       <div className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between hover:shadow-lg transition-shadow">
         <div className="flex items-center space-x-4">
           <Image
-            src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1980&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            src={booking?.hotel?.images[0]}
             height={100}
             width={100}
-            alt="Property Thumbnail"
+            alt={booking?.hotel?.propertyName}
             className="w-24 h-24 object-cover rounded-md"
           />
           <div>
@@ -30,7 +30,7 @@ const BookingCard = ({ booking }: { booking: Payment }) => {
               Booking Date: {formattedDate(booking?.createdAt)}
             </p>
             <p className="text-zinc-500 text-sm">
-              Booking Code: {booking?._id?.slice(0, 6)}
+              Booking Code: {booking?._id}
             </p>
           </div>
         </div>

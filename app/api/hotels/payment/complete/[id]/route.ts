@@ -1,7 +1,5 @@
 import connectMongo from "@/config/dbConnect";
-import { sendEmail } from "@/config/resend-email";
 import Payment from "@/model/paymentModel";
-import User from "@/model/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function PUT(
@@ -12,17 +10,21 @@ export async function PUT(
     await connectMongo();
     const id = params.id;
     const data = await request.json();
-    const updatePayment = await Payment.findByIdAndUpdate(id, data);
-    const user = await User.findOne({ _id: updatePayment?.user });
-    const res = await sendEmail(updatePayment, user?.email);
-    console.log(res);
+    const isPaymentExist = await Payment.findById({ _id: id });
+    if (!isPaymentExist) {
+      return NextResponse.json({
+        status: 400,
+        message: "Payment not found!",
+      });
+    }
+    const updatePayment = await Payment.findByIdAndUpdate({ _id: id }, data);
+
     return NextResponse.json({
       status: 200,
       updatePayment,
       message: "Payment updated successfully!",
     });
   } catch (error) {
-    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({
         status: 500,

@@ -16,9 +16,8 @@ const PaymentContainer = ({ payment }: { payment: Payment }) => {
       guests: payment.guests,
       cardNumber: payment.cardNumber,
       totalCosts: payment.totalCosts,
-      user: payment.user,
-      hotel:
-        typeof payment.hotel === "string" ? payment.hotel : payment.hotel._id,
+      user: payment.user._id,
+      hotel: payment.hotel._id,
       status: payment.status,
     },
   });
