@@ -23,9 +23,6 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
   const user = hotel?.user;
   const isOwnerOfHotel = session?.user?.email === user?.email;
 
-  if (!hotel) {
-    return notFound();
-  }
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-8">
