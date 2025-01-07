@@ -23,6 +23,7 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
   } = useFormContext<PaymentSchema>();
   const data = watch();
 
+  console.log(errors);
   const days = calculateDays(data.checkInDate, data.checkoutDate);
   const guests = data.guests;
   const roomCount = guests > 4 ? guests / 2 : 1;
