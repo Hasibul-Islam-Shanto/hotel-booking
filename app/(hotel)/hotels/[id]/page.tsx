@@ -15,6 +15,50 @@ import {
 } from "react-icons/fa6";
 import { MdPool } from "react-icons/md";
 
+const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const response = await fetchHotel(params.id);
+  const hotel = response.hotel;
+  const imageUrl = hotel?.images[0];
+  const title = hotel?.propertyName;
+  const description = hotel?.description;
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "website",
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+      url: `${SITE_URL}/hotels/${hotel?._id}`,
+      siteName: "Hotel Booking",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: hotel?.propertyName,
+      description: hotel?.description,
+      images: [imageUrl],
+      creator: "@hasibulislamshanto",
+    },
+  };
+}
+
+const facilityIcons: Record<string, JSX.Element> = {
+  "Free Wifi": <FaWifi />,
+  "Fitness Center": <FaDumbbell />,
+  "Beach Access": <FaUmbrellaBeach />,
+  "Free Parking": <FaSquareParking />,
+  Kitchen: <FaSink />,
+  "Private Pool": <MdPool />,
+};
 const HotelDetails = async ({ params }: { params: { id: string } }) => {
   const session = await auth();
   const response = await fetchHotel(params.id);
@@ -74,12 +118,7 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
               <div className="grid grid-cols-2 gap-4">
                 {hotel?.facilities.map((facility: string) => (
                   <div key={facility} className="flex items-center gap-2">
-                    {facility === "Free Wifi" && <FaWifi />}
-                    {facility === "Fitness Center" && <FaDumbbell />}
-                    {facility === "Beach Access" && <FaUmbrellaBeach />}
-                    {facility === "Free Parking" && <FaSquareParking />}
-                    {facility === "Kitchen" && <FaSink />}
-                    {facility === "Private Pool" && <MdPool />}
+                    {facilityIcons[facility]}
                     <span>{facility}</span>
                   </div>
                 ))}
