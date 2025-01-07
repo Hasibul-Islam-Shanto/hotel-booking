@@ -14,6 +14,7 @@ import {
   FaWifi,
 } from "react-icons/fa6";
 import { MdPool } from "react-icons/md";
+import ShareHotel from "@/components/hotel/ShareHotel";
 
 const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
@@ -66,6 +67,12 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
   const user = hotel?.user;
   const isOwnerOfHotel = session?.user?.email === user?.email;
 
+  const shareData = {
+    title: `${hotel?.propertyName}`,
+    description: hotel?.description,
+    url: `${SITE_URL}/hotels/${hotel?._id}`,
+    imageUrl: hotel?.images[0],
+  };
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -137,6 +144,8 @@ const HotelDetails = async ({ params }: { params: { id: string } }) => {
       >
         <ReviewContainer isOwnerOfHotel={isOwnerOfHotel} hotel={hotel} />
       </Suspense>
+
+      <ShareHotel {...shareData} />
     </>
   );
 };
