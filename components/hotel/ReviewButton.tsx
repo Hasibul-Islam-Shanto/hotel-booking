@@ -7,8 +7,10 @@ import { FaStar } from "react-icons/fa6";
 import Hotel from "@/types/hotel";
 import { postReview } from "@/lib/api/post-api";
 import Spinner from "../ui/Spinner";
+import { useRouter } from "next/navigation";
 
 const ReviewButton = ({ hotel }: { hotel: Hotel }) => {
+  const router = useRouter();
   const [isReviewModalOpen, setIsReviewModalOpen] = useState<boolean>(false);
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState<string>("");
@@ -33,6 +35,7 @@ const ReviewButton = ({ hotel }: { hotel: Hotel }) => {
       setIsReviewModalOpen(false);
       setRating(0);
       setDescription("");
+      router.refresh();
     } else {
       setError(response.message);
     }

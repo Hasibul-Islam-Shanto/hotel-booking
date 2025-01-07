@@ -22,8 +22,6 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
     formState: { errors },
   } = useFormContext<PaymentSchema>();
   const data = watch();
-
-  console.log(errors);
   const days = calculateDays(data.checkInDate, data.checkoutDate);
   const guests = data.guests;
   const roomCount = guests > 4 ? guests / 2 : 1;
@@ -53,7 +51,6 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
     }
   };
 
-  console.log(errors);
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>

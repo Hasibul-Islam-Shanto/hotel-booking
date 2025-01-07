@@ -36,7 +36,8 @@ export async function POST(request: NextRequest) {
       description: data.description,
     });
     await review.save();
-    revalidatePath(`/hotels/${data?.hotelId}`);
+    revalidatePath(`/hotels/${data?.hotelId}`, "page");
+    revalidatePath(`/hotels/review/get?hotelId=${data?.hotelId}`, "page");
     return NextResponse.json({
       status: 200,
       review,

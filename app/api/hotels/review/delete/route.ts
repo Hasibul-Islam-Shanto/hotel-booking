@@ -31,7 +31,11 @@ export async function DELETE(request: NextRequest) {
       });
     }
     await Review.findByIdAndDelete({ _id: id });
-    revalidatePath(`/hotels/${isUserOwnTheReview._id}`);
+    revalidatePath(`/hotels/${isUserOwnTheReview._id}`, "layout");
+    revalidatePath(
+      `/hotels/review/get?hotelId=${isUserOwnTheReview._id}`,
+      "layout"
+    );
     return NextResponse.json({
       status: 200,
       message: "Review deleted successfully",

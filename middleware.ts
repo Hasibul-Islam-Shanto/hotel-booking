@@ -20,6 +20,13 @@ export default middleware((req) => {
   if (isPublicRoute) {
     return NextResponse.next();
   }
+  if (nextUrl.pathname === "/") {
+    if (!nextUrl.searchParams.has("page")) {
+      nextUrl.searchParams.set("page", "1");
+      nextUrl.searchParams.set("limit", "8");
+      return NextResponse.redirect(nextUrl);
+    }
+  }
 
   if (!isLoggedIn) {
     const redirectUrl = new URL(LOGIN, nextUrl);

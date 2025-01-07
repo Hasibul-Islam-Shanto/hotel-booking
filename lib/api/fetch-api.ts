@@ -1,4 +1,5 @@
 import Hotel from "@/types/hotel";
+import { Pagination } from "@/types/pagination";
 import { Payment } from "@/types/payment";
 import Review from "@/types/reviews";
 import { revalidatePath } from "next/cache";
@@ -7,15 +8,27 @@ const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 interface HotelsResponse {
   status: number;
   hotels: Hotel[];
+  pagination: Pagination;
 }
-export const fetchHotels = async (): Promise<HotelsResponse> => {
-  const response = await fetch(`${apiBaseUrl}/api/hotels/get`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "no-store",
-  });
+export const fetchHotels = async ({
+  page,
+  limit,
+  search,
+}: {
+  page?: number;
+  limit?: number;
+  search?: string;
+}): Promise<HotelsResponse> => {
+  const response = await fetch(
+    `${apiBaseUrl}/api/hotels/get?page=${page}&limit=${limit}&search=${search}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    }
+  );
   const res = await response.json();
   revalidatePath("/");
   return res;

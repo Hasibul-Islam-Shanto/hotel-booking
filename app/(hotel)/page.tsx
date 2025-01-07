@@ -1,10 +1,21 @@
 import HotelDetailsCard from "@/components/ui/HotelDetailsCard";
+import HotelPagination from "@/components/ui/HotelPagination";
 import { fetchHotels } from "@/lib/api/fetch-api";
 import Hotel from "@/types/hotel";
 import { FaCircleInfo } from "react-icons/fa6";
-
-const HomePage = async () => {
-  const response = await fetchHotels();
+type SearchParams = {
+  searchParams: {
+    page?: string;
+    limit?: string;
+    search?: string;
+  };
+};
+const HomePage = async ({ searchParams }: SearchParams) => {
+  const page = Number(searchParams?.page || 1);
+  const limit = Number(searchParams?.limit || 8);
+  const search = searchParams?.search || "";
+  const response = await fetchHotels({ page, limit, search });
+  const pagination = response.pagination;
   const hotels = response.hotels;
 
   return (
@@ -29,6 +40,7 @@ const HomePage = async () => {
             ))}
           </div>
         )}
+        <HotelPagination pagination={pagination} />
       </section>
     </>
   );

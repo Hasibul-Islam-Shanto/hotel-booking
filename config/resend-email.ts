@@ -5,7 +5,7 @@ import { Resend } from "resend";
 export async function sendEmail(payment: Payment, email: string | undefined) {
   const pdfBase64 = generatePdfBase64(payment);
   const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-  console.log("Sending email to", email);
+
   try {
     await resend.emails.send({
       from: "Acme <onboarding@resend.dev>",

@@ -1,6 +1,31 @@
+"use client";
+import useDebounce from "@/hooks/useDebounce";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 
 const SearchInput = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathName = usePathname();
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search") || ""
+  );
+  const debouncedValue = useDebounce(searchTerm, 500);
+
+  useEffect(() => {
+    if (pathName === "/") {
+      const params = new URLSearchParams(searchParams);
+      if (debouncedValue) {
+        params.set("search", debouncedValue);
+        params.set("page", "1");
+        params.set("limit", "8");
+      } else {
+        params.delete("search");
+      }
+      router.push(`/?${params.toString()}`);
+    }
+  }, [debouncedValue, router, searchParams]);
   return (
     <>
       <div className="row-start-2 col-span-2 border-0 md:border flex shadow-sm hover:shadow-md transition-all md:rounded-full items-center px-2">
@@ -8,6 +33,8 @@ const SearchInput = () => {
           <input
             type="text"
             placeholder="Where to?"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             className="px-3 bg-transparent focus:outline-none lg:col-span-3 placeholder:text-sm"
           />
         </div>
