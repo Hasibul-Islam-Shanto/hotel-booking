@@ -1,5 +1,4 @@
 import { Hotel } from "@/schemas/hotel";
-export const avatar = "https://avatar.iran.liara.run/public/boy";
 
 export const formattedDataForHotel = (data: Hotel) => {
   const images = [

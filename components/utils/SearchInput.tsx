@@ -25,7 +25,7 @@ const SearchInput = () => {
       }
       router.push(`/?${params.toString()}`);
     }
-  }, [debouncedValue, router, searchParams]);
+  }, [debouncedValue, pathName, router, searchParams]);
   return (
     <>
       <div className="row-start-2 col-span-2 border-0 md:border flex shadow-sm hover:shadow-md transition-all md:rounded-full items-center px-2">

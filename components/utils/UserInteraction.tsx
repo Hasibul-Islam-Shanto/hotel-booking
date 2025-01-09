@@ -7,7 +7,6 @@ import PopupElementWithLogin from "@/components/utils/PopupElementWithLogin";
 import PopupElementWithoutLogin from "@/components/utils/PopupElementWithoutLogin";
 import { Session } from "next-auth";
 import Image from "next/image";
-import { avatar } from "@/utils/helper";
 
 interface PropsType {
   session: Session | null;
@@ -61,13 +60,9 @@ const UserInteraction = ({ session }: PropsType) => {
               <FaUser className="text-white" />
             </span>
           ) : (
-            <Image
-              src={avatar}
-              height={30}
-              width={30}
-              alt="profile-image"
-              className=""
-            />
+            <div className="h-8 w-8 font-bold text-lg text-white flex items-center justify-center bg-teal-500 rounded-full">
+              {session?.user?.name?.slice(0, 1).toUpperCase()}
+            </div>
           )}
         </button>
 

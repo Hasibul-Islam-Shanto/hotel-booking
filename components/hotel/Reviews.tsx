@@ -16,17 +16,19 @@ const Reviews = async ({ reviews }: { reviews: Review[] }) => {
             <div className="flex justify-between items-center">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
-                  <Image
-                    src={
-                      review?.user?.image
-                        ? review?.user?.image
-                        : "https://avatar.iran.liara.run/public"
-                    }
-                    height={48}
-                    width={48}
-                    alt="User avatar"
-                    className="w-full h-full object-cover"
-                  />
+                  {review?.user?.image ? (
+                    <Image
+                      src={review?.user?.image}
+                      height={48}
+                      width={48}
+                      alt="User avatar"
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="h-full w-full font-bold text-2xl text-white flex items-center justify-center bg-teal-500">
+                      {review?.user?.name.slice(0, 1).toUpperCase()}
+                    </div>
+                  )}
                 </div>
                 <div>
                   <h4 className="font-medium">{review?.user?.name}</h4>
