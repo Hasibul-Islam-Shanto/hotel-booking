@@ -52,14 +52,17 @@ const BookingCard = ({ booking }: { booking: Payment }) => {
       </div>
       {isTripDetailsOpen && (
         <Modal>
-          <div className="w-[80%] flex flex-col justify-center items-center bg-white p-4 rounded-lg">
+          <div className="w-[80%] flex flex-col justify-center items-center bg-white rounded-lg">
             <div className="w-full flex justify-end">
               <button onClick={() => setIsTripDetailsOpen(false)}>
                 <FiX className="text-3xl" />
               </button>
             </div>
-            <ImageGallery images={booking?.hotel?.images} />
-            <div className="flex p-2 justify-between items-start w-full">
+            <div className="px-5">
+              <ImageGallery images={booking?.hotel?.images} />
+            </div>
+
+            <div className="flex px-5 pb-2 justify-between items-start w-full">
               <div>
                 <h2 className="text-lg text-zinc-800 font-semibold">
                   {booking?.hotel?.propertyName}

@@ -19,19 +19,32 @@ export const fetchHotels = async ({
   limit?: number;
   search?: string;
 }): Promise<HotelsResponse> => {
-  const response = await fetch(
-    `${apiBaseUrl}/api/hotels/get?page=${page}&limit=${limit}&search=${search}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/hotels/get?page=${page}&limit=${limit}&search=${search}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  );
-  const res = await response.json();
-  revalidatePath("/");
-  return res;
+    const res = await response.json();
+    revalidatePath("/");
+
+    if (res.status !== 200) {
+      throw new Error(res.message || "Failed to fetch hotels!");
+    }
+    return res;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to fetch hotels!"
+    );
+  }
 };
 
 interface HotelResponse {
@@ -39,15 +52,30 @@ interface HotelResponse {
   hotel: Hotel;
 }
 export const fetchHotel = async (id: string): Promise<HotelResponse> => {
-  const response = await fetch(`${apiBaseUrl}/api/hotels/${id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    cache: "no-store",
-  });
-  const res = await response.json();
-  return res;
+  try {
+    const response = await fetch(`${apiBaseUrl}/api/hotels/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const res = await response.json();
+
+    if (res.status !== 200) {
+      throw new Error(res.message || "Failed to fetch hotel!");
+    }
+
+    return res;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to fetch hotel!"
+    );
+  }
 };
 
 export const fetchOwnerHotels = async (email: string) => {

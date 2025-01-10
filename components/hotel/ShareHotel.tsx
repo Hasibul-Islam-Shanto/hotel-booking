@@ -2,15 +2,7 @@
 
 import { FaFacebook, FaTwitter } from "react-icons/fa";
 
-const ShareHotel = ({
-  url,
-  title,
-}: //   description,
-{
-  url: string;
-  title: string;
-  description: string;
-}) => {
+const ShareHotel = ({ url, title }: { url: string; title: string }) => {
   const handleFacebookShare = () => {
     const shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
       url
@@ -34,14 +26,14 @@ const ShareHotel = ({
             onClick={handleFacebookShare}
             className="text-center cursor-pointer"
           >
-            <FaFacebook className="text-2xl text-blue-500" />
+            <FaFacebook className="text-3xl text-blue-500" />
           </button>
 
           <button
             onClick={handleTwitterShare}
             className="text-center cursor-pointer"
           >
-            <FaTwitter className="text-2xl text-blue-400" />
+            <FaTwitter className="text-3xl text-blue-400" />
           </button>
         </div>
       </div>

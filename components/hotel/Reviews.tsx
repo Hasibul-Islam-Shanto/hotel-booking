@@ -13,7 +13,7 @@ const Reviews = async ({ reviews }: { reviews: Review[] }) => {
       <div className="grid grid-cols-2 gap-8">
         {reviews?.map((review) => (
           <div key={review._id} className="space-y-4">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-start gap-x-8 items-center">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-gray-200 rounded-full overflow-hidden">
                   {review?.user?.image ? (
