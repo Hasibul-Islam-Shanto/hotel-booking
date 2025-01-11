@@ -11,8 +11,8 @@ const PaymentCheckoutDetails = ({ payment }: { payment: Payment }) => {
   const guests = data.guests;
   const roomCount = guests > 2 ? Math.ceil(guests / 2) : 1;
   const costForDays =
-    typeof payment.hotel === "object"
-      ? payment.hotel.pricePerNight * days * roomCount
+    typeof payment?.hotel === "object"
+      ? payment?.hotel?.pricePerNight * days * roomCount
       : 0;
   const totalCost = costForDays + 15.5 + 40.5;
   return (

@@ -32,6 +32,7 @@ export const generatePdfBase64 = (payment: Payment) => {
   doc.text(`Card Number: ${payment.cardNumber}`, 20, 90);
   doc.text(`Total Costs: $${payment.totalCosts}`, 20, 100);
   doc.text(`Status: ${payment.status}`, 20, 110);
-  const pdfBase64 = doc.output("datauristring");
+  const pdfBase64 = doc.output("datauristring").split(",")[1];
+
   return pdfBase64;
 };

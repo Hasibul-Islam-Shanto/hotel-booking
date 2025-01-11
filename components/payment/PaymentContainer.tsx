@@ -11,14 +11,14 @@ const PaymentContainer = ({ payment }: { payment: Payment }) => {
     resolver: zodResolver(paymentSchema),
     mode: "all",
     defaultValues: {
-      checkInDate: new Date(payment.checkInDate),
-      checkoutDate: new Date(payment.checkoutDate),
-      guests: payment.guests,
-      cardNumber: payment.cardNumber,
-      totalCosts: payment.totalCosts,
-      user: payment.user._id,
-      hotel: payment.hotel._id,
-      status: payment.status,
+      checkInDate: new Date(payment?.checkInDate),
+      checkoutDate: new Date(payment?.checkoutDate),
+      guests: payment?.guests,
+      cardNumber: payment?.cardNumber,
+      totalCosts: payment?.totalCosts,
+      user: payment?.user._id,
+      hotel: payment?.hotel._id,
+      status: payment?.status,
     },
   });
   return (

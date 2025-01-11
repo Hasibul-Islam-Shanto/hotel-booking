@@ -8,6 +8,7 @@ import { useFormContext } from "react-hook-form";
 import Spinner from "../ui/Spinner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { sendEmail } from "@/app/actions";
 
 const PaymentForm = ({ payment }: { payment: Payment }) => {
   const router = useRouter();
@@ -26,8 +27,8 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
   const guests = data.guests;
   const roomCount = guests > 4 ? guests / 2 : 1;
   const costForDays =
-    typeof payment.hotel === "object"
-      ? payment.hotel.pricePerNight * days * roomCount
+    typeof payment?.hotel === "object"
+      ? payment?.hotel.pricePerNight * days * roomCount
       : 0;
   const totalCost = costForDays + 15.5 + 40.5;
 
@@ -47,6 +48,8 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
     const response = await updatePayment(payment?._id, formatedData);
     setLoading(false);
     if (response.status === 200) {
+      console.log(response?.updatePayment);
+      await sendEmail(response?.updatePayment, payment?.user?.email);
       router.push(`/hotels/payment/${response?.updatePayment?._id}/success`);
     }
   };

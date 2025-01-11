@@ -1,33 +1,34 @@
 import { auth } from "@/auth";
-import BookingCard from "@/components/booking/BookingCard";
+import HotelBookingContainer from "@/components/booking/HotelBookingContainer";
+import HotelPagination from "@/components/ui/Pagination";
+import ShowError from "@/components/ui/ShowError";
 import { fetchBookings } from "@/lib/api/fetch-api";
-import { Payment } from "@/types/payment";
 
-const Bookings = async () => {
-  const session = await auth();
-  const email = session?.user?.email ?? null;
-  const response = await fetchBookings(email);
-  const bookings = response.bookings;
+type SearchParams = {
+  page: string;
+  limit: string;
+};
 
-  return (
-    <>
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">My Bookings</h1>
-        {bookings?.length === 0 && (
-          <div className="w-full flex justify-center items-center">
-            <p className="text-gray-500 text-3xl font-bold">
-              No bookings found!
-            </p>
-          </div>
+const Bookings = async ({ searchParams }: { searchParams: SearchParams }) => {
+  try {
+    const session = await auth();
+    const email = session?.user?.email ?? null;
+    const page = Number(searchParams?.page || 1);
+    const limit = Number(searchParams?.limit || 8);
+    const response = await fetchBookings(email, page, limit);
+    const { bookings, pagination } = response;
+
+    return (
+      <>
+        <HotelBookingContainer bookings={bookings} />
+        {bookings?.length > 0 && (
+          <HotelPagination pagination={pagination} path="/hotels/bookings" />
         )}
-        <div className="space-y-4">
-          {bookings?.map((booking: Payment) => (
-            <BookingCard key={booking._id} booking={booking} />
-          ))}
-        </div>
-      </div>
-    </>
-  );
+      </>
+    );
+  } catch (error) {
+    return <ShowError error={error as Error} />;
+  }
 };
 
 export default Bookings;

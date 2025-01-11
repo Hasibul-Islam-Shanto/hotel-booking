@@ -2,9 +2,8 @@ import Hotel from "@/types/hotel";
 import { Pagination } from "@/types/pagination";
 import { Payment } from "@/types/payment";
 import Review from "@/types/reviews";
-import { revalidatePath } from "next/cache";
 
-const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+const apiBaseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 interface HotelsResponse {
   status: number;
   hotels: Hotel[];
@@ -27,14 +26,12 @@ export const fetchHotels = async ({
         headers: {
           "Content-Type": "application/json",
         },
-        cache: "no-store",
       }
     );
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const res = await response.json();
-    revalidatePath("/");
 
     if (res.status !== 200) {
       throw new Error(res.message || "Failed to fetch hotels!");
@@ -58,18 +55,15 @@ export const fetchHotel = async (id: string): Promise<HotelResponse> => {
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store",
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
     const res = await response.json();
-
     if (res.status !== 200) {
       throw new Error(res.message || "Failed to fetch hotel!");
     }
-
     return res;
   } catch (error) {
     throw new Error(
@@ -78,19 +72,35 @@ export const fetchHotel = async (id: string): Promise<HotelResponse> => {
   }
 };
 
-export const fetchOwnerHotels = async (email: string) => {
-  const response = await fetch(
-    `${apiBaseUrl}/api/hotels/owner-hotels?email=${email}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+export const fetchOwnerHotels = async (
+  email: string,
+  page: number,
+  limit: number
+): Promise<HotelsResponse> => {
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/hotels/owner-hotels?email=${email}&page=${page}&limit=${limit}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  );
-  const res = await response.json();
-  return res;
+    const res = await response.json();
+
+    if (res.status !== 200) {
+      throw new Error(res.message || "Failed to fetch owner hotels!");
+    }
+    return res;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to fetch owner hotels!"
+    );
+  }
 };
 
 export const fetchPayment = async (id: string) => {
@@ -108,22 +118,36 @@ export const fetchPayment = async (id: string) => {
 interface BookingsResponse {
   status: number;
   bookings: Payment[];
+  pagination: Pagination;
 }
 export const fetchBookings = async (
-  email: string | null
+  email: string | null,
+  page: number,
+  limit: number
 ): Promise<BookingsResponse> => {
-  const response = await fetch(
-    `${apiBaseUrl}/api/hotels/payment/owned-payment?email=${email}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/hotels/payment/owned-payment?email=${email}&page=${page}&limit=${limit}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  );
-  const res = await response.json();
-  return res;
+    const res = await response.json();
+    if (res.status !== 200) {
+      throw new Error(res.message || "Failed to fetch bookings!");
+    }
+    return res;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to fetch bookings!"
+    );
+  }
 };
 
 interface ReviewsResponse {

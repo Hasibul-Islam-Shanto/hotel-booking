@@ -6,9 +6,10 @@ import { FaChevronLeft } from "react-icons/fa";
 
 const PaymentDetails = async ({ params }: { params: { id: string } }) => {
   const response = await fetchPayment(params.id);
+  console.log(response);
   const payment = response.payment;
-  if (payment.status === "completed") {
-    redirect(`/payment/success/${payment._id}`);
+  if (payment?.status === "completed") {
+    redirect(`/payment/success/${payment?._id}`);
   }
   return (
     <>

@@ -5,9 +5,13 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const email = searchParams.get("email");
+
   try {
     await connectMongo();
+    const email = searchParams.get("email");
+    const page = Number(searchParams.get("page") || 1);
+    const limit = Number(searchParams.get("limit") || 8);
+    const skip = (page - 1) * limit;
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json({
@@ -15,18 +19,38 @@ export async function GET(request: NextRequest) {
         message: "User not found",
       });
     }
+    const totalPayments = await Payment.countDocuments({ user: user?._id });
+    const totalPages = Math.ceil(totalPayments / limit);
     const ownedPayment = await Payment.find({
       user: user?._id,
       status: "completed",
-    }).populate({
-      path: "hotel user",
-      select: "-password",
-    });
+    })
+      .sort({ createdAt: -1 })
+      .populate([
+        {
+          path: "hotel",
+        },
+        {
+          path: "user",
+          select: "-password",
+        },
+      ])
+      .skip(skip)
+      .limit(limit);
     return NextResponse.json({
       status: 200,
       bookings: ownedPayment,
+      pagination: {
+        currentPage: page,
+        totalPages,
+        totalItems: totalPayments,
+        itemsPerPage: limit,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
     });
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({
         status: 500,

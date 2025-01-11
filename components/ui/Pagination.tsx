@@ -3,18 +3,24 @@ import { Pagination } from "@/types/pagination";
 import { useRouter } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const HotelPagination = ({ pagination }: { pagination: Pagination }) => {
+const HotelPagination = ({
+  pagination,
+  path = "/",
+}: {
+  pagination: Pagination;
+  path?: string;
+}) => {
   const router = useRouter();
   const { currentPage, totalPages, hasNextPage, hasPrevPage } = pagination;
 
   const handleNextPage = () => {
     const nextPage = currentPage + 1;
-    router.push(`/?page=${nextPage}&limit=8`);
+    router.push(`${path}?page=${nextPage}&limit=8`);
   };
 
   const handlePrevPage = () => {
     const prevPage = currentPage - 1;
-    router.push(`/?page=${prevPage}&limit=8`);
+    router.push(`${path}?page=${prevPage}&limit=8`);
   };
   return (
     <div className="mt-8 flex justify-center">

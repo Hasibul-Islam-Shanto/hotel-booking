@@ -18,7 +18,6 @@ export async function PUT(
       });
     }
     const updatePayment = await Payment.findByIdAndUpdate({ _id: id }, data);
-
     return NextResponse.json({
       status: 200,
       updatePayment,

@@ -1,5 +1,5 @@
 import HotelDetailsCard from "@/components/ui/HotelDetailsCard";
-import HotelPagination from "@/components/ui/HotelPagination";
+import HotelPagination from "@/components/ui/Pagination";
 import ShowError from "@/components/ui/ShowError";
 import { fetchHotels } from "@/lib/api/fetch-api";
 import Hotel from "@/types/hotel";
