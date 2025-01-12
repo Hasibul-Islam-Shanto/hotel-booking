@@ -1,6 +1,6 @@
 import { Types, Document, Schema, models, Model, model } from "mongoose";
-import { User } from "@/model/userModel";
 import { Hotel } from "@/model/hotelModel";
+import { IUser } from "./userModel";
 
 export interface Payment extends Document {
   checkInDate: Date;
@@ -11,7 +11,7 @@ export interface Payment extends Document {
   address?: string;
   city?: string;
   zipCode?: string;
-  user: Types.ObjectId | User;
+  user: Types.ObjectId | IUser;
   hotel: Types.ObjectId | Hotel;
   status: "pending" | "completed";
   createdAt: Date;

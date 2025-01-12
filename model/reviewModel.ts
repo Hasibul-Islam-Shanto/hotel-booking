@@ -1,9 +1,9 @@
 import { Schema, Types, models, Model, model, Document } from "mongoose";
-import { User } from "@/model/userModel";
+import { IUser } from "@/model/userModel";
 import { Hotel } from "@/model/hotelModel";
 
 export interface Review extends Document {
-  user: Types.ObjectId | User;
+  user: Types.ObjectId | IUser;
   hotel: Types.ObjectId | Hotel;
   rating: number;
   description: string;
