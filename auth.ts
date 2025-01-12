@@ -77,7 +77,7 @@ export const {
           await connectMongo();
           const user = await UserModel.findOne({ email: credentials.email });
           if (!user) {
-            throw new Error("User already exist!");
+            throw new Error("Invalid email or password!");
           }
           const isPasswordMatch = await bcrypt.compare(
             credentials.password as string,

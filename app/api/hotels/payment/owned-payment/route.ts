@@ -50,7 +50,6 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error) {
-    console.log(error);
     if (error instanceof Error) {
       return NextResponse.json({
         status: 500,

@@ -8,6 +8,9 @@ export interface Payment extends Document {
   guests: number;
   cardNumber?: string;
   totalCosts?: number;
+  address?: string;
+  city?: string;
+  zipCode?: string;
   user: Types.ObjectId | User;
   hotel: Types.ObjectId | Hotel;
   status: "pending" | "completed";
@@ -22,6 +25,9 @@ const paymentSchema = new Schema<Payment>(
     guests: { type: Number, required: true },
     cardNumber: { type: String, required: false },
     totalCosts: { type: Number, required: false },
+    address: { type: String, required: false },
+    city: { type: String, required: false },
+    zipCode: { type: String, required: false },
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     hotel: { type: Schema.Types.ObjectId, ref: "Hotel", required: true },
     status: {

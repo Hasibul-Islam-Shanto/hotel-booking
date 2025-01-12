@@ -4,7 +4,8 @@ import { signIn } from "@/auth";
 import transporter from "@/config/nodemailer";
 import { Payment } from "@/types/payment";
 import { checkAuthError } from "@/utils/checkAuthError";
-import { generatePdfBase64 } from "@/utils/receipt-download";
+import { receiptTemplate } from "@/utils/receiptTemplate";
+import { EmailReceiptTemplate } from "@/utils/template";
 
 export async function doSignin() {
   await signIn("google", { callbackUrl: "/" });
@@ -34,14 +35,15 @@ export async function deleteHotel(id: string | undefined) {
   return res;
 }
 
-export async function sendEmail(payment: Payment, email: string | undefined) {
-  const pdfBase64 = generatePdfBase64(payment);
+export async function sendEmail(payment: Payment) {
+  const pdfBase64 = receiptTemplate(payment);
   try {
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: "mdhasibulislam895@gmail.com",
-      to: email,
+      to: payment?.user?.email,
       subject: "Payment Receipt",
-      text: "Please find the attached payment receipt",
+      html: EmailReceiptTemplate(payment),
+      text: "Thank you for your payment! This receipt confirms your successful transaction. It includes your check-in and check-out dates, the total amount paid, and the last four digits of your card. Please keep this for your records. We look forward to welcoming you!",
       attachments: [
         {
           filename: "payment-receipt.pdf",
@@ -50,9 +52,7 @@ export async function sendEmail(payment: Payment, email: string | undefined) {
         },
       ],
     });
-    console.log(info);
   } catch (error) {
-    console.log(error);
     throw new Error(
       error instanceof Error ? error.message : "Failed to send email"
     );

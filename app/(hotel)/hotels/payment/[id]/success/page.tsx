@@ -14,7 +14,6 @@ import {
 const PaymentStatus = async ({ params }: { params: { id: string } }) => {
   const response = await fetchPayment(params.id);
   const payment = response.payment;
-
   return (
     <>
       <div className="max-w-3xl mx-auto p-6">

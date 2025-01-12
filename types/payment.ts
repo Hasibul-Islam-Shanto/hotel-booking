@@ -13,6 +13,9 @@ export type Payment = {
   status: "pending" | "completed";
   createdAt?: Date;
   updatedAt?: Date;
+  address?: string;
+  city?: string;
+  zipCode?: string;
 };
 
 export type FormattedPayment = {
@@ -25,4 +28,7 @@ export type FormattedPayment = {
   user: string;
   hotel: string;
   status: string;
+  address?: string;
+  city?: string;
+  zipCode?: string;
 };

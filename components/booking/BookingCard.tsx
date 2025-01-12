@@ -3,11 +3,11 @@ import { Payment } from "@/types/payment";
 import { formattedDate } from "@/utils/helper";
 import Image from "next/image";
 import { FaDownload } from "react-icons/fa";
-import { generatePDF } from "@/utils/receipt-download";
 import { useState } from "react";
 import ImageGallery from "../hotel/ImageGallery";
 import Modal from "../ui/Modal";
 import { FiX } from "react-icons/fi";
+import { receiptTemplate } from "@/utils/receiptTemplate";
 
 const BookingCard = ({ booking }: { booking: Payment }) => {
   const [isTripDetailsOpen, setIsTripDetailsOpen] = useState<boolean>(false);
@@ -42,7 +42,7 @@ const BookingCard = ({ booking }: { booking: Payment }) => {
             View Trip Details
           </button>
           <button
-            onClick={() => generatePDF(booking)}
+            onClick={() => receiptTemplate(booking, true)}
             className="px-3 py-2 flex items-center gap-2 text-sm border border-gray-300 rounded-lg hover:bg-gray-50"
           >
             <FaDownload className="text-gray-600" />

@@ -3,6 +3,7 @@ import connectMongo from "@/config/dbConnect";
 import Hotel from "@/model/hotelModel";
 import Payment from "@/model/paymentModel";
 import User from "@/model/userModel";
+import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
@@ -50,6 +51,8 @@ export async function POST(request: NextRequest) {
       user: user._id,
     });
     await payment.save();
+    revalidatePath("/");
+    revalidatePath(`/hotels/${data?.hotel}`);
     return NextResponse.json({
       status: 200,
       payment,

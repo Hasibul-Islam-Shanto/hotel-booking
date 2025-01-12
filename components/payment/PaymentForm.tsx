@@ -8,7 +8,6 @@ import { useFormContext } from "react-hook-form";
 import Spinner from "../ui/Spinner";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { sendEmail } from "@/app/actions";
 
 const PaymentForm = ({ payment }: { payment: Payment }) => {
   const router = useRouter();
@@ -43,13 +42,14 @@ const PaymentForm = ({ payment }: { payment: Payment }) => {
       user: payment.user?._id as string,
       hotel: payment.hotel?._id as string,
       status: "completed",
+      address: data.streetAddress,
+      city: data.city,
+      zipCode: data.zipCode,
     };
 
     const response = await updatePayment(payment?._id, formatedData);
     setLoading(false);
     if (response.status === 200) {
-      console.log(response?.updatePayment);
-      await sendEmail(response?.updatePayment, payment?.user?.email);
       router.push(`/hotels/payment/${response?.updatePayment?._id}/success`);
     }
   };
