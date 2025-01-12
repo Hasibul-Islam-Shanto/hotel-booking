@@ -9,11 +9,7 @@ export async function GET(
 ) {
   try {
     await connectMongo();
-    const hotel = await Hotel.findById(params.id).populate({
-      path: "user",
-      select: "-password",
-      model: "User",
-    });
+    const hotel = await Hotel.findById(params.id);
     const reviews = await Review.find({ hotel: hotel?._id });
     const totalRating = reviews.reduce(
       (sum, review) => sum + (review.rating || 0),
