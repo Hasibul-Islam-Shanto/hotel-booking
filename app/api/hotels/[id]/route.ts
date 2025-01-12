@@ -12,6 +12,7 @@ export async function GET(
     const hotel = await Hotel.findById(params.id).populate({
       path: "user",
       select: "-password",
+      model: "User",
     });
     const reviews = await Review.find({ hotel: hotel?._id });
     const totalRating = reviews.reduce(
