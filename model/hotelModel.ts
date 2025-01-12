@@ -1,5 +1,4 @@
 import { Model, model, models, Schema, Types, Document } from "mongoose";
-import { User } from "@/model/userModel";
 
 export interface Hotel extends Document {
   propertyName: string;
@@ -12,7 +11,7 @@ export interface Hotel extends Document {
   beds: number;
   description: string;
   facilities: string[];
-  user: Types.ObjectId | User;
+  user: Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -28,7 +27,7 @@ const hotelSchema = new Schema<Hotel>({
   beds: { type: Number, required: true },
   description: { type: String, required: true },
   facilities: [{ type: String }],
-  user: { type: Schema.Types.ObjectId, ref: "user", required: true },
+  user: { type: Schema.Types.ObjectId, ref: "User", required: true },
 });
 
 const Hotel =
