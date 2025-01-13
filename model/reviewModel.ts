@@ -1,17 +1,17 @@
-import { Schema, Types, models, Model, model, Document } from "mongoose";
+import mongoose, { Schema, Types, Document } from "mongoose";
 import { IUser } from "@/model/userModel";
-import { Hotel } from "@/model/hotelModel";
+import { IHotel } from "@/model/hotelModel";
 
-export interface Review extends Document {
+export interface IReview extends Document {
   user: Types.ObjectId | IUser;
-  hotel: Types.ObjectId | Hotel;
+  hotel: Types.ObjectId | IHotel;
   rating: number;
   description: string;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const reviewSchema = new Schema<Review>(
+const reviewSchema = new Schema<IReview>(
   {
     user: { type: Schema.Types.ObjectId, ref: "User", required: true },
     hotel: { type: Schema.Types.ObjectId, ref: "Hotel", required: true },
@@ -22,6 +22,6 @@ const reviewSchema = new Schema<Review>(
 );
 
 const Review =
-  (models.Review as Model<Review>) || model<Review>("Review", reviewSchema);
+  mongoose.models.Review || mongoose.model<IReview>("Review", reviewSchema);
 
 export default Review;

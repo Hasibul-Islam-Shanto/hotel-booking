@@ -1,6 +1,7 @@
 import connectMongo from "@/config/dbConnect";
 import Payment from "@/model/paymentModel";
 import User from "@/model/userModel";
+import Hotel from "@/model/hotelModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -29,6 +30,7 @@ export async function GET(request: NextRequest) {
       .populate([
         {
           path: "hotel",
+          model: Hotel,
         },
         {
           path: "user",

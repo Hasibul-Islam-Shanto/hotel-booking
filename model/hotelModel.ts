@@ -1,6 +1,7 @@
-import { Model, model, models, Schema, Types, Document } from "mongoose";
+import mongoose, { Schema, Types, Document } from "mongoose";
+import { IUser } from "./userModel";
 
-export interface Hotel extends Document {
+export interface IHotel extends Document {
   propertyName: string;
   propertyLocation: string;
   images: string[];
@@ -11,12 +12,12 @@ export interface Hotel extends Document {
   beds: number;
   description: string;
   facilities: string[];
-  user: Types.ObjectId;
+  user: Types.ObjectId | IUser;
   createdAt: Date;
   updatedAt: Date;
 }
 
-const hotelSchema = new Schema<Hotel>({
+const hotelSchema = new Schema<IHotel>({
   propertyName: { type: String, required: true },
   propertyLocation: { type: String, required: true },
   images: [{ type: String }],
@@ -31,6 +32,6 @@ const hotelSchema = new Schema<Hotel>({
 });
 
 const Hotel =
-  (models.Hotel as Model<Hotel>) || model<Hotel>("Hotel", hotelSchema);
+  mongoose.models.Hotel || mongoose.model<IHotel>("Hotel", hotelSchema);
 
 export default Hotel;

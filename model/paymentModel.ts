@@ -1,8 +1,8 @@
-import { Types, Document, Schema, models, Model, model } from "mongoose";
-import { Hotel } from "@/model/hotelModel";
+import mongoose, { Types, Document, Schema } from "mongoose";
+import { IHotel } from "@/model/hotelModel";
 import { IUser } from "./userModel";
 
-export interface Payment extends Document {
+export interface IPayment extends Document {
   checkInDate: Date;
   checkoutDate: Date;
   guests: number;
@@ -12,13 +12,13 @@ export interface Payment extends Document {
   city?: string;
   zipCode?: string;
   user: Types.ObjectId | IUser;
-  hotel: Types.ObjectId | Hotel;
+  hotel: Types.ObjectId | IHotel;
   status: "pending" | "completed";
   createdAt: Date;
   updatedAt: Date;
 }
 
-const paymentSchema = new Schema<Payment>(
+const paymentSchema = new Schema<IPayment>(
   {
     checkInDate: { type: Date, required: true },
     checkoutDate: { type: Date, required: true },
@@ -40,7 +40,6 @@ const paymentSchema = new Schema<Payment>(
 );
 
 const Payment =
-  (models.Payment as Model<Payment>) ||
-  model<Payment>("Payment", paymentSchema);
+  mongoose.models.Payment || mongoose.model<IPayment>("Payment", paymentSchema);
 
 export default Payment;

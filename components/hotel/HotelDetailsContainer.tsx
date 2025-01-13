@@ -53,9 +53,9 @@ const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
         <div className="grid grid-cols-3 gap-8">
           <div className="col-span-2">
             <div className="border-b pb-6 mb-6">
-              {/* <h2 className="text-2xl font-semibold mb-4">
+              <h2 className="text-2xl font-semibold mb-4">
                 Entire villa hosted by {hotel?.user?.name}
-              </h2> */}
+              </h2>
               <div className="grid grid-cols-3 gap-4 text-gray-600">
                 <div className="flex items-center gap-2">
                   <i className="fas fa-person"></i>
