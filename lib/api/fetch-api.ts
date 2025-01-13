@@ -157,16 +157,28 @@ interface ReviewsResponse {
 export const fetchReviews = async (
   id: string | undefined
 ): Promise<ReviewsResponse> => {
-  const response = await fetch(
-    `${apiBaseUrl}/api/hotels/review/get?hotelId=${id}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      cache: "no-store",
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/api/hotels/review/get?hotelId=${id}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
+      }
+    );
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
-  );
-  const res = await response.json();
-  return res;
+    const res = await response.json();
+    if (res.status !== 200) {
+      throw new Error(res.message || "Failed to fetch reviews!");
+    }
+    return res;
+  } catch (error) {
+    throw new Error(
+      error instanceof Error ? error.message : "Failed to fetch reviews!"
+    );
+  }
 };

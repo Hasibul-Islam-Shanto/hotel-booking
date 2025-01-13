@@ -1,5 +1,6 @@
 import connectMongo from "@/config/dbConnect";
 import Review from "@/model/reviewModel";
+import User from "@/model/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
@@ -10,6 +11,7 @@ export async function GET(request: NextRequest) {
     const reviews = await Review.find({ hotel: hotelId }).populate({
       path: "user",
       select: "name _id email image",
+      model: User,
     });
     return NextResponse.json({
       status: 200,
