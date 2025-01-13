@@ -1,5 +1,6 @@
 import mongoose, { Schema, Types, Document } from "mongoose";
-import { IUser } from "./userModel";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import User, { IUser } from "./userModel";
 
 export interface IHotel extends Document {
   propertyName: string;
