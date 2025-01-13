@@ -10,9 +10,9 @@ import {
 import { MdPool } from "react-icons/md";
 import ImageGallery from "./ImageGallery";
 import BookHotel from "./BookHotel";
-// import { Suspense } from "react";
-// import Spinner from "../ui/Spinner";
-// import ReviewContainer from "./ReviewContainer";
+import { Suspense } from "react";
+import Spinner from "../ui/Spinner";
+import ReviewContainer from "./ReviewContainer";
 import ShareHotel from "./ShareHotel";
 const facilityIcons: Record<string, JSX.Element> = {
   "Free Wifi": <FaWifi />,
@@ -30,6 +30,7 @@ const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
     url: `${SITE_URL}/hotels/${hotel?._id}`,
     imageUrl: hotel?.images[0],
   };
+
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -92,7 +93,7 @@ const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
           <BookHotel hotel={hotel} />
         </div>
       </div>
-      {/* <Suspense
+      <Suspense
         fallback={
           <div className="w-full flex justify-center items-center">
             <Spinner className="h-10 w-10 border-t-primary" />
@@ -100,7 +101,7 @@ const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
         }
       >
         <ReviewContainer hotel={hotel} />
-      </Suspense> */}
+      </Suspense>
 
       <ShareHotel {...shareData} />
     </>
