@@ -1,6 +1,8 @@
 import connectMongo from "@/config/dbConnect";
 import Hotel from "@/model/hotelModel";
 import Review from "@/model/reviewModel";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import User from "@/model/userModel";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
