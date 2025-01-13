@@ -1,4 +1,3 @@
-import { auth } from "@/auth";
 import Hotel from "@/types/hotel";
 import { FaStar } from "react-icons/fa";
 import {
@@ -26,9 +25,6 @@ const facilityIcons: Record<string, JSX.Element> = {
 const SITE_URL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
 const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
-  const session = await auth();
-  const user = hotel?.user;
-  const isOwnerOfHotel = session?.user?.email === user?.email;
   const shareData = {
     title: `${hotel?.propertyName}`,
     url: `${SITE_URL}/hotels/${hotel?._id}`,
@@ -93,7 +89,7 @@ const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
               </div>
             </div>
           </div>
-          {!isOwnerOfHotel && <BookHotel hotel={hotel} />}
+          <BookHotel hotel={hotel} />
         </div>
       </div>
       <Suspense
@@ -103,7 +99,7 @@ const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
           </div>
         }
       >
-        <ReviewContainer isOwnerOfHotel={isOwnerOfHotel} hotel={hotel} />
+        <ReviewContainer hotel={hotel} />
       </Suspense>
 
       <ShareHotel {...shareData} />

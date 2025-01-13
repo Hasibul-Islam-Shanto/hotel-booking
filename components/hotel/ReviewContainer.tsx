@@ -3,22 +3,11 @@ import ReviewButton from "./ReviewButton";
 import Reviews from "./Reviews";
 import { fetchReviews } from "@/lib/api/fetch-api";
 import { FaStar } from "react-icons/fa6";
-import { auth } from "@/auth";
 
-const ReviewContainer = async ({
-  isOwnerOfHotel,
-  hotel,
-}: {
-  isOwnerOfHotel: boolean;
-  hotel: Hotel;
-}) => {
+const ReviewContainer = async ({ hotel }: { hotel: Hotel }) => {
   const response = await fetchReviews(hotel._id);
   const reviews = response.reviews;
-  const session = await auth();
 
-  const isUserGiveReview = reviews.some(
-    (review) => review.user.email === session?.user?.email
-  );
   const sumRating =
     reviews?.length > 0 &&
     reviews.reduce((acc, review) => acc + review.rating, 0);
@@ -41,9 +30,8 @@ const ReviewContainer = async ({
               <span className="text-gray-600">{reviews?.length} reviews</span>
             </div>
           </div>
-          {!isOwnerOfHotel && !isUserGiveReview && (
-            <ReviewButton hotel={hotel} />
-          )}
+
+          <ReviewButton hotel={hotel} />
         </div>
 
         <Reviews reviews={reviews} />
