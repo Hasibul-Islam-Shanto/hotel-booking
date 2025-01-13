@@ -11,7 +11,7 @@ export async function GET(
     await connectMongo();
     const hotel = await Hotel.findById(params.id).populate({
       path: "user",
-      select: "name _id email image",
+      select: "name email",
     });
     const reviews = await Review.find({ hotel: hotel?._id });
     const totalRating = reviews.reduce(

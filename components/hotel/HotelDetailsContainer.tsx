@@ -30,6 +30,7 @@ const HotelDetailsContainer = async ({ hotel }: { hotel: Hotel }) => {
     url: `${SITE_URL}/hotels/${hotel?._id}`,
     imageUrl: hotel?.images[0],
   };
+
   return (
     <>
       <div className="max-w-7xl mx-auto px-6 py-8">
