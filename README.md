@@ -1,11 +1,12 @@
 # Hotel Booking App
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](link-to-build) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](link-to-build)
 
 ## Description
 A comprehensive hotel booking platform built with Next.js 14, React.js, TypeScript, and Tailwind CSS. Users can seamlessly browse and book hotels, complete secure payments, and manage their bookings. Key features include automated email receipts, downloadable receipts, and a review system for booked hotels. Hotel owners can efficiently manage their listings with options to create, edit, and delete hotels. The app ensures secure authentication and role-based authorization using Auth.js and leverages MongoDB for robust data management.
 
 ## Table of Contents
 - [Features](#features)
+- [Screenshots](#screenshots)
 - [Installation](#installation)
 - [Technologies](#technologies)
 - [Usage](#usage)
@@ -38,6 +39,44 @@ A comprehensive hotel booking platform built with Next.js 14, React.js, TypeScri
 ### Data Management  
 - **Scalable Database**  
   MongoDB ensures efficient storage and retrieval of data.
+
+## Screenshots
+- **Login and Registration**  
+![Screenshot 2025-01-15 at 2 31 53 PM (2)](https://github.com/user-attachments/assets/cedc1594-6784-4239-96a6-2760fce6657b)
+![Screenshot 2025-01-15 at 2 32 03 PM (2)](https://github.com/user-attachments/assets/1fe24c94-8f80-434c-b15b-cb0ee96fa2d0)
+
+- **Home**
+  ![Screenshot 2025-01-15 at 2 32 12 PM (2)](https://github.com/user-attachments/assets/70037a3a-9bab-4c47-b243-fe7f261fba9e)
+
+- **Hotel Details**
+  ![Screenshot 2025-01-15 at 2 33 28 PM (2)](https://github.com/user-attachments/assets/251d17fd-2df9-4231-8b77-edbf0b240ec4)
+
+- **Payment process**
+  ![Screenshot 2025-01-15 at 2 33 49 PM (2)](https://github.com/user-attachments/assets/2b0b00a4-ef7b-4b90-a242-cbab22701756)
+
+- **Payment Confirm**
+ ![Screenshot 2025-01-15 at 2 34 34 PM (2)](https://github.com/user-attachments/assets/24975d10-e1bd-413d-8ef9-c46f6cf164fd)
+
+  
+- **Payment confirmation Email with attachment**
+  ![Screenshot 2025-01-15 at 2 35 34 PM (2)](https://github.com/user-attachments/assets/87c09c0c-ea61-421c-8a33-d7fcdc65a6ad)
+![Screenshot 2025-01-15 at 2 35 26 PM (2)](https://github.com/user-attachments/assets/bac4e17e-229e-4eb2-a4d6-ca09c83330e1)
+
+- **Booking List**
+![Screenshot 2025-01-15 at 2 35 09 PM (2)](https://github.com/user-attachments/assets/8c5e6611-08a4-4234-adc5-7dd06daf6a97)
+
+- **Hotel Manage List**
+![Screenshot 2025-01-15 at 2 36 16 PM (2)](https://github.com/user-attachments/assets/0201351a-2209-41be-9876-ce79fe743ec6)
+
+- **Trip Details**
+  ![Screenshot 2025-01-15 at 2 35 01 PM (2)](https://github.com/user-attachments/assets/e3dd3e67-3fbe-471d-bac1-4404c3f59e89)
+
+- **Create Hotel**
+  ![Screenshot 2025-01-15 at 2 54 52 PM (2)](https://github.com/user-attachments/assets/65e2c83e-91b4-49cf-9477-bade53318226)
+![Screenshot 2025-01-15 at 2 54 49 PM (2)](https://github.com/user-attachments/assets/9049826b-25ce-48eb-a1f2-eb69d8e25158)
+
+
+
 
 
 ## Technologies  
