@@ -9,11 +9,6 @@ export const navbarPopupElements = [
     title: "Signup",
     url: "/signup",
   },
-  {
-    id: 3,
-    title: "Help",
-    url: "/help",
-  },
 ];
 
 export const loggedInNavbarPopupElements = [

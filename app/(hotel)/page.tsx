@@ -41,7 +41,9 @@ const HomePage = async ({ searchParams }: SearchParams) => {
               ))}
             </div>
           )}
-          {pagination && <HotelPagination pagination={pagination} />}
+          {pagination && hotels?.length > 0 && (
+            <HotelPagination pagination={pagination} />
+          )}
         </section>
       </>
     );
